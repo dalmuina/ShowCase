@@ -1,6 +1,7 @@
 package com.dalmuina.showcase
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,7 +11,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import com.dalmuina.showcase.core.presentation.util.ObserveAsEvents
+import com.dalmuina.showcase.core.presentation.util.toString
 import com.dalmuina.showcase.games.navigation.NavManager
+import com.dalmuina.showcase.games.presentation.GameListEvent
 import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import org.koin.androidx.compose.koinViewModel
@@ -27,6 +31,18 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val viewModel = koinViewModel<GamesViewModel>()
                     val state by viewModel.state.collectAsStateWithLifecycle()
+                    ObserveAsEvents(events = viewModel.events) { event ->
+                        when(event) {
+                            is GameListEvent.Error ->{
+                                Toast.makeText(
+                                    this,
+                                    event.error.toString(this),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                    }
                     NavManager(state = state)
                 }
             }
