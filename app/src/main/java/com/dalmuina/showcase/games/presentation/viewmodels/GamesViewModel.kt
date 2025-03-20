@@ -5,11 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.dalmuina.showcase.core.domain.util.onError
 import com.dalmuina.showcase.core.domain.util.onSuccess
 import com.dalmuina.showcase.games.domain.usecases.GetAllGamesUseCase
+import com.dalmuina.showcase.games.presentation.GameListEvent
 import com.dalmuina.showcase.games.presentation.models.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameListState
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,6 +29,9 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase
             SharingStarted.WhileSubscribed(5000L),
             GameListState()
         )
+
+    private val _events  = Channel<GameListEvent>()
+    val events = _events.receiveAsFlow()
 
 //    private val _games = MutableStateFlow<List<GameUi>>(emptyList())
 //    val games = _games.asStateFlow()
@@ -48,10 +54,11 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase
                             it.toGameUi()
                         }
                     )}
-                }.onError {
+                }.onError {error ->
                     _state.update { it.copy(
                         isLoading = false
                     )}
+                    _events.send(GameListEvent.Error(error))
                 }
 
 
