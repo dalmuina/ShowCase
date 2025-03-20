@@ -1,6 +1,6 @@
 package com.dalmuina.showcase.games.presentation.models
 
-import com.dalmuina.showcase.games.data.models.GameDetail
+import com.dalmuina.showcase.games.domain.models.GameDetail
 
 data class GameDetailUi(
     val name :String ="",
@@ -10,4 +10,4 @@ data class GameDetailUi(
     val backgroundImage: String = ""
 )
 
-fun GameDetail.toDomain() = GameDetailUi(name, descriptionRaw, metacritic, website, backgroundImage)
+fun GameDetail.toGameDetailUi() = GameDetailUi(name, descriptionRaw, metacritic, website, backgroundImage)

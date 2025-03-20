@@ -8,36 +8,32 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dalmuina.showcase.games.presentation.components.CardGame
 import com.dalmuina.showcase.games.presentation.components.MainTopBar
 import com.dalmuina.showcase.games.presentation.models.GameUi
-import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
+import com.dalmuina.showcase.games.presentation.state.GameListState
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
 @Composable
 fun HomeView(
     navController: NavController,
+    state : GameListState,
     modifier: Modifier = Modifier,
-    viewModel: GamesViewModel = hiltViewModel()
 ){
-    val games by viewModel.games.collectAsState()
     Scaffold(
         modifier = modifier,
         topBar = {
             MainTopBar(title = "API GAMES", onClickBackButton = {})
         }
     ) {
-        ContentHomeView(it, games){
+        ContentHomeView(it, state.games){
             navController.navigate("DetailView/${it}")
         }
     }
@@ -55,13 +51,12 @@ fun ContentHomeView(pad: PaddingValues, games: List<GameUi>, onClick:(id:Int)->U
             CardGame(item) {
                 onClick(item.id)
             }
-            item.name?.let {
-                Text(text = it,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color.White,
-                    modifier = Modifier.padding(start = 10.dp)
-                )
-            }
+
+            Text(text = item.name,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White,
+                modifier = Modifier.padding(start = 10.dp)
+            )
         }
     }
 }

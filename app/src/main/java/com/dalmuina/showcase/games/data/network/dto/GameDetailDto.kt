@@ -1,8 +1,8 @@
-package com.dalmuina.showcase.games.data.models
+package com.dalmuina.showcase.games.data.network.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class GameDetail(
+data class GameDetailDto(
     @SerializedName("name") val name : String,
     @SerializedName("description_raw") val descriptionRaw : String,
     @SerializedName("metacritic") val metacritic: Int,

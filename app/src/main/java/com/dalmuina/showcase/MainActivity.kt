@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.getValue
 import com.dalmuina.showcase.games.navigation.NavManager
+import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.compose.koinViewModel
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +25,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.Companion.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavManager()
+                    val viewModel = koinViewModel<GamesViewModel>()
+                    val state by viewModel.state.collectAsStateWithLifecycle()
+                    NavManager(state = state)
                 }
             }
         }
