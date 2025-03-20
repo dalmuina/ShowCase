@@ -1,6 +1,6 @@
 package com.dalmuina.showcase.games.presentation.models
 
-import com.dalmuina.showcase.games.data.models.Game
+import com.dalmuina.showcase.games.domain.models.Game
 
 data class GameUi(
     val id:Int,

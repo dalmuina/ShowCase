@@ -1,9 +1,7 @@
 package com.dalmuina.showcase.games.data.network
 
-import com.dalmuina.showcase.games.data.models.Game
-import com.dalmuina.showcase.games.data.models.GameDetail
+import com.dalmuina.showcase.games.data.network.dto.GameDetailDto
 import com.dalmuina.showcase.games.data.network.dto.GameDto
-import javax.inject.Inject
 
 class GameService (private val api:GameApiClient) {
 
@@ -15,7 +13,7 @@ class GameService (private val api:GameApiClient) {
         return null
     }
 
-    suspend fun getGameById(id: Int): GameDetail? {
+    suspend fun getGameById(id: Int): GameDetailDto? {
         val response = api.getGameById(id)
         if(response.isSuccessful){
             return response.body()

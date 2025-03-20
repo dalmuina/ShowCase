@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.data.models
+package com.dalmuina.showcase.games.domain.models
 
 import com.google.gson.annotations.SerializedName
 

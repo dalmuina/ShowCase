@@ -2,7 +2,7 @@ package com.dalmuina.showcase.di
 
 import com.dalmuina.showcase.core.data.network.HttpClientFactory
 import com.dalmuina.showcase.games.data.GameRepository
-import com.dalmuina.showcase.games.domain.GetAllGamesUseCase
+import com.dalmuina.showcase.games.domain.usecases.GetAllGamesUseCase
 import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
 import io.ktor.client.engine.cio.CIO
 import org.koin.androidx.viewmodel.dsl.viewModelOf

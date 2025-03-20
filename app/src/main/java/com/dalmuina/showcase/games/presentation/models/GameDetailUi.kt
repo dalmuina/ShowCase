@@ -1,6 +1,6 @@
 package com.dalmuina.showcase.games.presentation.models
 
-import com.dalmuina.showcase.games.data.models.GameDetail
+import com.dalmuina.showcase.games.domain.models.GameDetail
 
 data class GameDetailUi(
     val name :String ="",

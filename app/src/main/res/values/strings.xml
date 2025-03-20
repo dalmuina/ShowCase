@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">ShowCase</string>
     <string name="error_request_timeout">Te request timed out.</string>
     <string name="too_many_requests">Opps, it seems like your quota is exceded.</string>
     <string name="error_no_internet">Couldn\'t connect to server, please check your connection.</string>

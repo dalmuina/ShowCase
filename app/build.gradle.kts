@@ -3,8 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.detekt)
 }
 
@@ -72,11 +70,6 @@ dependencies {
     debugImplementation(libs.bundles.compose.debug)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(platform(libs.androidx.compose.bom))
-
-    //Hilt
-    implementation(libs.dagger.hilt.android)
-    ksp(libs.dagger.hilt.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
 
     //Retrofit
     implementation (libs.bundles.retrofit)

@@ -9,15 +9,17 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dalmuina.showcase.games.presentation.DetailView
 import com.dalmuina.showcase.games.presentation.HomeView
+import com.dalmuina.showcase.games.presentation.state.GameListState
 
 @Composable
 fun NavManager(
+    state: GameListState,
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "Home") {
         composable("Home") {
-            HomeView(navController = navController,modifier= modifier)
+            HomeView(navController = navController,state = state,modifier= modifier)
         }
         composable("DetailView/{id}", arguments = listOf(
             navArgument("id") { type = NavType.IntType }

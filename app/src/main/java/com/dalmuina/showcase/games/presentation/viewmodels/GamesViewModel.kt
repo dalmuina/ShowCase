@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.dalmuina.showcase.core.domain.util.onError
 import com.dalmuina.showcase.core.domain.util.onSuccess
 import com.dalmuina.showcase.games.domain.usecases.GetAllGamesUseCase
-import com.dalmuina.showcase.games.presentation.models.GameDetailUi
 import com.dalmuina.showcase.games.presentation.models.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import kotlinx.coroutines.flow.MutableStateFlow
