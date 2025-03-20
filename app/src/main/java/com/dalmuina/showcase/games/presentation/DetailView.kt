@@ -34,6 +34,7 @@ import com.dalmuina.showcase.games.presentation.models.GameDetailUi
 import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
+import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +43,8 @@ fun DetailView(
     navController: NavController,
     id: Int,
     modifier: Modifier = Modifier,
-    viewModel: GamesViewModel = hiltViewModel()) {
+    viewModel: GamesViewModel = koinViewModel<GamesViewModel>()
+) {
 
     LaunchedEffect(Unit) {
         viewModel.getGameById(id)

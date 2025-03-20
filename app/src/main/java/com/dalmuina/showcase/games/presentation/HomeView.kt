@@ -23,12 +23,13 @@ import com.dalmuina.showcase.games.presentation.models.GameUi
 import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeView(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: GamesViewModel = hiltViewModel()
+    viewModel: GamesViewModel = koinViewModel<GamesViewModel>()
 ){
     val games by viewModel.games.collectAsState()
     Scaffold(

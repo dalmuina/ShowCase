@@ -2,11 +2,12 @@ package com.dalmuina.showcase.games.data.network
 
 import com.dalmuina.showcase.games.data.models.Game
 import com.dalmuina.showcase.games.data.models.GameDetail
+import com.dalmuina.showcase.games.data.network.dto.GameDto
 import javax.inject.Inject
 
-class GameService @Inject constructor(private val api:GameApiClient) {
+class GameService (private val api:GameApiClient) {
 
-    suspend fun getGames(): List<Game>? {
+    suspend fun getGames(): List<GameDto>? {
         val response = api.getGames()
         if (response.isSuccessful){
             return response.body()?.results

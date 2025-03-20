@@ -15,9 +15,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-@HiltViewModel
-class GamesViewModel @Inject constructor(private val getAllGamesUseCase: GetAllGamesUseCase,
-                                         private val getGameByIdUseCase: GetGameByIdUseCase) : ViewModel() {
+class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase
+) : ViewModel() {
 
     private val _games = MutableStateFlow<List<GameUi>>(emptyList())
     val games = _games.asStateFlow()
@@ -39,18 +38,18 @@ class GamesViewModel @Inject constructor(private val getAllGamesUseCase: GetAllG
     }
 
     fun getGameById(id : Int){
-        viewModelScope.launch {
-            withContext(Dispatchers.Main) {
-                val result = getGameByIdUseCase(id)
-                _detail.value = GameDetailUi(
-                    name = result?.name ?: "",
-                    descriptionRaw = result?.descriptionRaw ?: "",
-                    metacritic = result?.metacritic ?: 0,
-                    website = result?.website ?: "sin web",
-                    backgroundImage = result?.backgroundImage ?: "",
-                )
-            }
-        }
+//        viewModelScope.launch {
+//            withContext(Dispatchers.Main) {
+//                val result = getGameByIdUseCase(id)
+//                _detail.value = GameDetailUi(
+//                    name = result?.name ?: "",
+//                    descriptionRaw = result?.descriptionRaw ?: "",
+//                    metacritic = result?.metacritic ?: 0,
+//                    website = result?.website ?: "sin web",
+//                    backgroundImage = result?.backgroundImage ?: "",
+//                )
+//            }
+//        }
     }
 
     fun clean(){

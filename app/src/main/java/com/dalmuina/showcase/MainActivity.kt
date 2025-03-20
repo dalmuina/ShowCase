@@ -12,7 +12,6 @@ import com.dalmuina.showcase.games.navigation.NavManager
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
