@@ -55,16 +55,16 @@ fun DetailView(
             viewModel.clean()
         }
     }
-    val detail by viewModel.detail.collectAsState()
+
 
     Scaffold(
         modifier = modifier,
         topBar = {
-            MainTopBar (title = detail.name, showBackButton = true, onClickBackButton = {
+            MainTopBar (title = "detail.name", showBackButton = true, onClickBackButton = {
                 navController.popBackStack() })
         }
     ) {
-        ContentDetailView(it, detail)
+        ContentDetailView(it, GameDetailUi())
     }
 }
 

@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.dalmuina.showcase.games.presentation.components.CardGame
 import com.dalmuina.showcase.games.presentation.components.MainTopBar
 import com.dalmuina.showcase.games.presentation.models.GameUi
+import com.dalmuina.showcase.games.presentation.state.GameListState
 import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
@@ -29,16 +30,15 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeView(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: GamesViewModel = koinViewModel<GamesViewModel>()
+    state : GameListState
 ){
-    val games by viewModel.games.collectAsState()
     Scaffold(
         modifier = modifier,
         topBar = {
             MainTopBar(title = "API GAMES", onClickBackButton = {})
         }
     ) {
-        ContentHomeView(it, games){
+        ContentHomeView(it, state.games){
             navController.navigate("DetailView/${it}")
         }
     }

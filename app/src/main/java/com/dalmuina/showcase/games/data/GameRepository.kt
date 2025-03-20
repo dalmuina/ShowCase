@@ -15,7 +15,7 @@ import io.ktor.client.request.get
 
 class GameRepository (private val httpClient: HttpClient) {
 
-    suspend fun getAllGamesFromApi(): Result<List<Game>, NetworkError>?{
+    suspend fun getAllGamesFromApi(): Result<List<Game>, NetworkError>{
         return safeCall<GamesResponseDto> {
             httpClient.get(
                 urlString = constructUrl("\"$ENDPOINT/{id}$API_KEY\"")

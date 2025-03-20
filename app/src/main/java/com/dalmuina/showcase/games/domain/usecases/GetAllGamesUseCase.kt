@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetAllGamesUseCase (private val repository: GameRepository){
 
-    suspend operator fun invoke(): Result<List<Game>, NetworkError>? {
+    suspend operator fun invoke(): Result<List<Game>, NetworkError> {
         return repository.getAllGamesFromApi()
     }
 }

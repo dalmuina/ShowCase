@@ -10,4 +10,4 @@ data class GameDetailUi(
     val backgroundImage: String = ""
 )
 
-fun GameDetail.toDomain() = GameDetailUi(name, descriptionRaw, metacritic, website, backgroundImage)
+fun GameDetail.toGameDetailUi() = GameDetailUi(name, descriptionRaw, metacritic, website, backgroundImage)
