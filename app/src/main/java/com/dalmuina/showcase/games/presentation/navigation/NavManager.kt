@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.navigation
+package com.dalmuina.showcase.games.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

@@ -8,8 +8,8 @@ import com.dalmuina.showcase.core.domain.util.map
 import com.dalmuina.showcase.core.presentation.util.Constants.API_KEY
 import com.dalmuina.showcase.core.presentation.util.Constants.ENDPOINT
 import com.dalmuina.showcase.games.data.network.dto.GamesResponseDto
-import com.dalmuina.showcase.games.domain.models.Game
-import com.dalmuina.showcase.games.domain.models.toGame
+import com.dalmuina.showcase.games.domain.model.Game
+import com.dalmuina.showcase.games.domain.model.toGame
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 

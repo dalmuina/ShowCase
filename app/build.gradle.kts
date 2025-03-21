@@ -71,9 +71,6 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(platform(libs.androidx.compose.bom))
 
-    //Retrofit
-    implementation (libs.bundles.retrofit)
-
     //Corrutinas
     implementation (libs.kotlinx.coroutines.android)
 

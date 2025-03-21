@@ -1,7 +1,7 @@
-package com.dalmuina.showcase.games.domain.usecases
+package com.dalmuina.showcase.games.domain.usecase
 
 import com.dalmuina.showcase.games.data.GameRepository
-import com.dalmuina.showcase.games.presentation.models.GameDetailUi
+import com.dalmuina.showcase.games.presentation.model.GameDetailUi
 
 class GetGameByIdUseCase (private val repository: GameRepository){
 

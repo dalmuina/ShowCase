@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.domain.models
+package com.dalmuina.showcase.games.domain.model
 
 data class GamesResponse(
     val count: Int,

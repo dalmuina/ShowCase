@@ -1,11 +1,13 @@
 package com.dalmuina.showcase.games.data.network.dto
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class GameDetailDto(
-    @SerializedName("name") val name : String,
-    @SerializedName("description_raw") val descriptionRaw : String,
-    @SerializedName("metacritic") val metacritic: Int,
-    @SerializedName("website") val website : String,
-    @SerializedName("background_image") val backgroundImage: String
+    @SerialName("name") val name : String,
+    @SerialName("description_raw") val descriptionRaw : String,
+    @SerialName("metacritic") val metacritic: Int,
+    @SerialName("website") val website : String,
+    @SerialName("background_image") val backgroundImage: String
 )
