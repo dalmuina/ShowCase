@@ -18,9 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dalmuina.showcase.games.presentation.components.CardGame
-import com.dalmuina.showcase.games.presentation.components.MainTopBar
-import com.dalmuina.showcase.games.presentation.models.GameUi
+import com.dalmuina.showcase.games.presentation.component.CardGame
+import com.dalmuina.showcase.games.presentation.component.MainTopBar
+import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark

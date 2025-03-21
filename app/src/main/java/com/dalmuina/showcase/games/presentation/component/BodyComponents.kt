@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.components
+package com.dalmuina.showcase.games.presentation.component
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -49,7 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.dalmuina.showcase.games.presentation.models.GameUi
+import com.dalmuina.showcase.games.presentation.model.GameUi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

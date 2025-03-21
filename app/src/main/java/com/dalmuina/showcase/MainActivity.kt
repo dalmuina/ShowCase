@@ -13,9 +13,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import com.dalmuina.showcase.core.presentation.util.ObserveAsEvents
 import com.dalmuina.showcase.core.presentation.util.toString
-import com.dalmuina.showcase.games.navigation.NavManager
+import com.dalmuina.showcase.games.presentation.navigation.NavManager
 import com.dalmuina.showcase.games.presentation.GameListEvent
-import com.dalmuina.showcase.games.presentation.viewmodels.GamesViewModel
+import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import org.koin.androidx.compose.koinViewModel
 

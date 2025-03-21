@@ -1,12 +1,12 @@
-package com.dalmuina.showcase.games.presentation.viewmodels
+package com.dalmuina.showcase.games.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dalmuina.showcase.core.domain.util.onError
 import com.dalmuina.showcase.core.domain.util.onSuccess
-import com.dalmuina.showcase.games.domain.usecases.GetAllGamesUseCase
+import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.presentation.GameListEvent
-import com.dalmuina.showcase.games.presentation.models.toGameUi
+import com.dalmuina.showcase.games.presentation.model.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

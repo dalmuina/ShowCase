@@ -11,7 +11,6 @@ activityCompose = "1.10.1"
 composeBom = "2025.03.00"
 kotlinxCoroutinesAndroid = "1.10.1"
 roomKtx = "2.6.1"
-retrofit = "2.9.0"
 coilCompose = "2.3.0"
 turbine = "1.0.0"
 detekt = "1.23.0"
@@ -55,8 +54,6 @@ androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-ru
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
@@ -94,11 +91,6 @@ ktor = [
     "ktor-client-core",
     "ktor-client-logging",
     "ktor-serialization-kotlinx-json"
-]
-
-retrofit = [
-    "retrofit",
-    "converter-gson"
 ]
 
 room = [

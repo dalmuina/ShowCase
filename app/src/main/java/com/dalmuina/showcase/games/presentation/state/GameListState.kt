@@ -1,7 +1,7 @@
 package com.dalmuina.showcase.games.presentation.state
 
 import androidx.compose.runtime.Immutable
-import com.dalmuina.showcase.games.presentation.models.GameUi
+import com.dalmuina.showcase.games.presentation.model.GameUi
 
 @Immutable
 data class GameListState(

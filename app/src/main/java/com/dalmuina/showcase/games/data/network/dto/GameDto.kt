@@ -1,10 +1,11 @@
 package com.dalmuina.showcase.games.data.network.dto
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class GameDto(
-    val id:Int,
-    val name:String,
-    val background_image: String
+    @SerialName("id")val id:Int,
+    @SerialName("name")val name:String,
+    @SerialName("background_image")val backgroundImage: String
 )

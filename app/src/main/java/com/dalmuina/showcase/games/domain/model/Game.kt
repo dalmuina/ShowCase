@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.domain.models
+package com.dalmuina.showcase.games.domain.model
 
 import com.dalmuina.showcase.games.data.network.dto.GameDto
 
@@ -12,6 +12,6 @@ fun GameDto.toGame(): Game {
     return Game(
         id = id,
         name = name,
-        backgroundImage = background_image
+        backgroundImage = backgroundImage
     )
 }
