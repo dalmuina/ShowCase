@@ -9,3 +9,9 @@ data class GameUi(
 )
 
 fun Game.toGameUi() = GameUi(id, name, backgroundImage)
+
+internal val previewGameUi = GameUi(
+    id = 1,
+    name = "GTA V",
+    backgroundImage = "https://example_image.jpg"
+)

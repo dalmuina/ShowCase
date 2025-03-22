@@ -5,19 +5,25 @@ import androidx.lifecycle.viewModelScope
 import com.dalmuina.showcase.core.domain.util.onError
 import com.dalmuina.showcase.core.domain.util.onSuccess
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
+import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
+import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.GameListEvent
+import com.dalmuina.showcase.games.presentation.model.toGameDetailUi
 import com.dalmuina.showcase.games.presentation.model.toGameUi
+import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase
+class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase,
+    private val getGameByIdUseCase: GetGameByIdUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(GameListState())
@@ -33,14 +39,22 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase
     private val _events  = Channel<GameListEvent>()
     val events = _events.receiveAsFlow()
 
-//    private val _games = MutableStateFlow<List<GameUi>>(emptyList())
-//    val games = _games.asStateFlow()
-//
-//    private val _detail = MutableStateFlow(GameDetailUi())
-//    val detail: StateFlow<GameDetailUi> = _detail.asStateFlow()
+    private val _detail = MutableStateFlow(GameDetailState())
+    val detail = _detail.asStateFlow()
 
+    fun onAction(action: GameListAction){
+        when(action) {
+            GameListAction.OnBackButtonClick -> {
+                clean()
+            }
+            is GameListAction.OnGameClick -> TODO()
+            is GameListAction.OnLoadGameDetail -> {
+                loadGameDetail(action.id)
+            }
+        }
+    }
 
-    fun fetchGames(){
+    private fun fetchGames(){
         viewModelScope.launch {
             _state.update { it.copy(
                 isLoading = true
@@ -61,37 +75,32 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase
                     _events.send(GameListEvent.Error(error))
                 }
 
-
-//            withContext(Dispatchers.Main) {
-//                val result = getAllGamesUseCase() ?: emptyList()
-//                _games.value = result
-//            }
         }
     }
 
-    fun getGameById(id : Int){
-//        viewModelScope.launch {
-//            withContext(Dispatchers.Main) {
-//                val result = getGameByIdUseCase(id)
-//                _detail.value = GameDetailUi(
-//                    name = result?.name ?: "",
-//                    descriptionRaw = result?.descriptionRaw ?: "",
-//                    metacritic = result?.metacritic ?: 0,
-//                    website = result?.website ?: "sin web",
-//                    backgroundImage = result?.backgroundImage ?: "",
-//                )
-//            }
-//        }
+    fun loadGameDetail(id : Int){
+        viewModelScope.launch {
+            _detail.update { it.copy(
+                isLoading = true
+            )}
+            getGameByIdUseCase(id)
+                .onSuccess { game->
+                    _detail.update {it.copy(
+                        isLoading = false,
+                        gameDetailUi = game.toGameDetailUi(),
+                    )}
+                }.onError {error ->
+                    _detail.update { it.copy(
+                        isLoading = false
+                    )}
+                    _events.send(GameListEvent.Error(error))
+                }
+
+        }
     }
 
     fun clean(){
-//        _detail.value = GameDetailUi(
-//            name = "",
-//            descriptionRaw = "",
-//            metacritic = 0,
-//            website = "",
-//            backgroundImage = "",
-//        )
+        _detail.value = GameDetailState()
     }
 }
 

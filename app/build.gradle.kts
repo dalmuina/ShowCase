@@ -69,7 +69,6 @@ dependencies {
     implementation(libs.bundles.compose)
     debugImplementation(libs.bundles.compose.debug)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
-    implementation(platform(libs.androidx.compose.bom))
 
     //Corrutinas
     implementation (libs.kotlinx.coroutines.android)
