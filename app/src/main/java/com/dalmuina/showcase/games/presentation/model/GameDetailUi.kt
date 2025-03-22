@@ -1,13 +1,22 @@
 package com.dalmuina.showcase.games.presentation.model
 
+import com.dalmuina.showcase.games.data.network.dto.GameDetailDto
 import com.dalmuina.showcase.games.domain.model.GameDetail
 
 data class GameDetailUi(
-    val name :String ="",
-    val descriptionRaw: String ="",
-    val metacritic: Int = 0,
-    val website: String =" ",
-    val backgroundImage: String = ""
+    val name :String,
+    val descriptionRaw: String,
+    val metacritic: Int,
+    val website: String,
+    val backgroundImage: String
 )
 
-fun GameDetail.toGameDetailUi() = GameDetailUi(name, descriptionRaw, metacritic, website, backgroundImage)
+fun GameDetail.toGameDetailUi() : GameDetailUi {
+    return GameDetailUi(
+        name = name,
+        descriptionRaw= descriptionRaw,
+        metacritic= metacritic,
+        website = website,
+        backgroundImage = backgroundImage
+    )
+}

@@ -29,21 +29,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.Companion.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel = koinViewModel<GamesViewModel>()
-                    val state by viewModel.state.collectAsStateWithLifecycle()
-                    ObserveAsEvents(events = viewModel.events) { event ->
-                        when(event) {
-                            is GameListEvent.Error ->{
-                                Toast.makeText(
-                                    this,
-                                    event.error.toString(this),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-
-                    }
-                    NavManager(state = state)
+                    NavManager()
                 }
             }
         }

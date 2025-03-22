@@ -1,79 +1,112 @@
 package com.dalmuina.showcase.games.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.dalmuina.showcase.core.presentation.util.ObserveAsEvents
+import com.dalmuina.showcase.core.presentation.util.toString
 import com.dalmuina.showcase.games.presentation.component.MainImage
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
 import com.dalmuina.showcase.games.presentation.component.MetaWebsite
 import com.dalmuina.showcase.games.presentation.component.ReviewCard
 import com.dalmuina.showcase.games.presentation.model.GameDetailUi
+import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
+import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailView(
     navController: NavController,
+    detail : GameDetailState,
+    onAction: (GameListAction) -> Unit,
+    events : Flow<GameListEvent>,
     id: Int,
-    modifier: Modifier = Modifier,
-    viewModel: GamesViewModel = koinViewModel<GamesViewModel>()
+    modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    ObserveAsEvents(events = events) { event ->
+        when(event) {
+            is GameListEvent.Error ->{
+                Toast.makeText(
+                    context,
+                    event.error.toString(context),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
+    }
     LaunchedEffect(Unit) {
-        viewModel.getGameById(id)
+        onAction(GameListAction.OnLoadGameDetail(id))
     }
 
     DisposableEffect(Unit){
         onDispose {
-            viewModel.clean()
+            onAction(GameListAction.OnBackButtonClick)
         }
     }
-
-
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            MainTopBar (title = "detail.name", showBackButton = true, onClickBackButton = {
-                navController.popBackStack() })
+    if (detail.isLoading) {
+        Box(
+            modifier = modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            CircularProgressIndicator()
         }
-    ) {
-        ContentDetailView(it, GameDetailUi())
+    } else {
+        Scaffold(
+            modifier = modifier,
+            topBar = {
+                MainTopBar (title = detail.gameDetailUi.name, showBackButton = true, onClickBackButton = {
+                    navController.popBackStack() })
+            }
+        ) {
+            ContentDetailView(it, detail)
+        }
     }
 }
 
 @Composable
-fun ContentDetailView(pad: PaddingValues, detail: GameDetailUi) {
+fun ContentDetailView(pad: PaddingValues, detail: GameDetailState) {
 
     Column(
         modifier = Modifier
             .padding(pad)
             .background(primaryContainerDark)
     ) {
-        MainImage(imageUrl = detail.backgroundImage)
+        MainImage(imageUrl = detail.gameDetailUi.backgroundImage)
         Spacer(modifier = Modifier.height(10.dp))
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -81,12 +114,12 @@ fun ContentDetailView(pad: PaddingValues, detail: GameDetailUi) {
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 5.dp)
         ) {
-            MetaWebsite(detail.website)
-            ReviewCard(detail.metacritic)
+            MetaWebsite(detail.gameDetailUi.website)
+            ReviewCard(detail.gameDetailUi.metacritic)
         }
 
         val scroll = rememberScrollState(0)
-        Text(text = detail.descriptionRaw,
+        Text(text = detail.gameDetailUi.descriptionRaw,
             color = Color.White,
             textAlign = TextAlign.Justify,
             modifier = Modifier
@@ -101,17 +134,19 @@ fun ContentDetailView(pad: PaddingValues, detail: GameDetailUi) {
 @Composable
 fun PreviewDetailView(){
     ShowCaseTheme {
-        val mockGameDetail = GameDetailUi(
-            name = "Gta",
-            descriptionRaw = "This is a description of the GTA game, this is a " +
-                    "description of the " +
-                    "GTA game, this is a description of the GTA game, this is a " +
-                    "description of the GTA game",
-            metacritic = 100,
-            website = "www.google.com",
-            backgroundImage = "https://media-rockstargames-com.akamaized.net/mfe6/prod" +
-                    "/__common/img/71d4d17edcd49703a5ea446cc0e588e6.jpg")
-
+        val mockGameDetail = GameDetailState(
+            isLoading = false,
+            gameDetailUi = GameDetailUi(
+                name = "Gta",
+                descriptionRaw = "This is a description of the GTA game, this is a " +
+                        "description of the " +
+                        "GTA game, this is a description of the GTA game, this is a " +
+                        "description of the GTA game",
+                metacritic = 100,
+                website = "www.google.com",
+                backgroundImage = "https://media-rockstargames-com.akamaized.net/mfe6/prod" +
+                        "/__common/img/71d4d17edcd49703a5ea446cc0e588e6.jpg")
+            )
         ContentDetailView(PaddingValues(16.dp), mockGameDetail)
     }
 }

@@ -1,5 +1,6 @@
 package com.dalmuina.showcase.games.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,23 +15,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.ui.unit.dp import androidx.navigation.NavController
+import com.dalmuina.showcase.core.presentation.util.ObserveAsEvents
+import com.dalmuina.showcase.core.presentation.util.toString
 import com.dalmuina.showcase.games.presentation.component.CardGame
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
 import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeView(
     navController: NavController,
     state : GameListState,
+    events : Flow<GameListEvent>,
     modifier: Modifier = Modifier,
 ){
+    val context = LocalContext.current
+    ObserveAsEvents(events = events) { event ->
+        when(event) {
+            is GameListEvent.Error ->{
+                Toast.makeText(
+                    context,
+                    event.error.toString(context),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    }
     if (state.isLoading) {
         Box(
             modifier = modifier
