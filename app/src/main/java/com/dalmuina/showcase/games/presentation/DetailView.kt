@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +28,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.dalmuina.showcase.core.presentation.util.ObserveAsEvents
 import com.dalmuina.showcase.core.presentation.util.toString
@@ -39,11 +37,9 @@ import com.dalmuina.showcase.games.presentation.component.MetaWebsite
 import com.dalmuina.showcase.games.presentation.component.ReviewCard
 import com.dalmuina.showcase.games.presentation.model.GameDetailUi
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
-import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
 import kotlinx.coroutines.flow.Flow
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

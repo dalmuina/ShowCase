@@ -1,6 +1,5 @@
 package com.dalmuina.showcase.games.presentation.model
 
-import com.dalmuina.showcase.games.data.network.dto.GameDetailDto
 import com.dalmuina.showcase.games.domain.model.GameDetail
 
 data class GameDetailUi(

@@ -5,8 +5,6 @@ import com.dalmuina.showcase.core.data.network.safeCall
 import com.dalmuina.showcase.core.domain.util.NetworkError
 import com.dalmuina.showcase.core.domain.util.Result
 import com.dalmuina.showcase.core.domain.util.map
-import com.dalmuina.showcase.core.presentation.util.Constants.API_KEY
-import com.dalmuina.showcase.core.presentation.util.Constants.ENDPOINT
 import com.dalmuina.showcase.games.data.network.dto.GameDetailDto
 import com.dalmuina.showcase.games.data.network.dto.GamesResponseDto
 import com.dalmuina.showcase.games.domain.model.Game

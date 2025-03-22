@@ -10,9 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dalmuina.showcase.games.presentation.DetailView
-import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.HomeView
-import com.dalmuina.showcase.games.presentation.state.GameListState
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import org.koin.androidx.compose.koinViewModel
 
