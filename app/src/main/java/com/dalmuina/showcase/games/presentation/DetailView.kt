@@ -1,6 +1,5 @@
 package com.dalmuina.showcase.games.presentation
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,13 +23,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dalmuina.showcase.core.presentation.util.ObserveAsEvents
-import com.dalmuina.showcase.core.presentation.util.toString
+import com.dalmuina.showcase.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.component.MainImage
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
 import com.dalmuina.showcase.games.presentation.component.MetaWebsite
@@ -47,23 +44,11 @@ fun DetailView(
     navController: NavController,
     detail : GameDetailState,
     onAction: (GameListAction) -> Unit,
-    events : Flow<GameListEvent>,
+    events : Flow<NetworkErrorEvent>,
     id: Int,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    ObserveAsEvents(events = events) { event ->
-        when(event) {
-            is GameListEvent.Error ->{
-                Toast.makeText(
-                    context,
-                    event.error.toString(context),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-    }
+    ObserveEvents(events)
     LaunchedEffect(Unit) {
         onAction(GameListAction.OnLoadGameDetail(id))
     }
@@ -86,7 +71,7 @@ fun DetailView(
             modifier = modifier,
             topBar = {
                 MainTopBar (title = detail.gameDetailUi.name, showBackButton = true, onClickBackButton = {
-                    navController.popBackStack() })
+                    navController.popBackStack() }, onAction = {})
             }
         ) {
             ContentDetailView(it, detail)

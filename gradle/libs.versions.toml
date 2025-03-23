@@ -22,7 +22,6 @@ material3-adaptive = "1.1.0"
 compose-material-icons-extended = "1.7.8"
 desugar-jdk-libs = "2.1.5"
 
-
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

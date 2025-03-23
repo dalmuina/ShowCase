@@ -9,52 +9,59 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.dalmuina.showcase.R
 
-val SpaceMono = FontFamily(
+val Monserrat = FontFamily(
     Font(
-        resId = R.font.space_mono_regular,
+        resId = R.font.montserrat_regular,
         weight = FontWeight.Normal
     ),
     Font(
-        resId = R.font.space_mono_italic,
+        resId = R.font.montserrat_italic,
         weight = FontWeight.Normal,
         style = FontStyle.Italic
     ),
     Font(
-        resId = R.font.space_mono_bold,
-        weight = FontWeight.Bold
+        resId = R.font.montserrat_regular,
+        weight = FontWeight.Medium
     ),
     Font(
-        resId = R.font.space_mono_bold_italic,
+        resId = R.font.montserrat_bold_italic,
         weight = FontWeight.Bold,
         style = FontStyle.Italic
     ),
 )
 
+val BarlowCondensed = FontFamily(
+    Font(
+        resId = R.font.barlow_condensed_medium,
+        weight = FontWeight.Medium
+    )
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodySmall = TextStyle(
-        fontFamily = SpaceMono,
+        fontFamily = Monserrat,
         fontWeight = FontWeight.Light,
         fontSize = 12.sp,
     ),
     bodyMedium = TextStyle(
-        fontFamily = SpaceMono,
+        fontFamily = Monserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
     bodyLarge = TextStyle(
-        fontFamily = SpaceMono,
+        fontFamily = Monserrat,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     labelMedium = TextStyle(
-        fontFamily = SpaceMono,
+        fontFamily = Monserrat,
         fontWeight = FontWeight.Normal,
     ),
     headlineMedium = TextStyle(
-        fontFamily = SpaceMono,
+        fontFamily = BarlowCondensed,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp
     )

@@ -19,7 +19,7 @@ import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTopBar(title: String, showBackButton: Boolean = false, onClickBackButton: () -> Unit){
+fun MainTopBar(title: String, showBackButton: Boolean = false, onClickBackButton: () -> Unit, onAction:()->Unit){
     TopAppBar(
         title = { Text(text = title, color = Color.White, fontWeight = FontWeight.ExtraBold) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -33,7 +33,7 @@ fun MainTopBar(title: String, showBackButton: Boolean = false, onClickBackButton
         },
         actions = {
             if(!showBackButton){
-                IconButton(onClick={onClickBackButton()}) {
+                IconButton(onClick={onAction()}) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "",tint = Color.White)
                 }
             }
@@ -52,7 +52,11 @@ annotation class PreviewWidths
 @Composable
 fun MainTopBarPreviewBack(){
     ShowCaseTheme {
-        MainTopBar(title = "API GAMES",true){}
+        MainTopBar(
+            title = "API GAMES",
+            true,
+            onClickBackButton = {},
+            onAction = {})
     }
 }
 
@@ -60,6 +64,10 @@ fun MainTopBarPreviewBack(){
 @Composable
 fun MainTopBarPreviewMain(){
     ShowCaseTheme {
-        MainTopBar(title = "API GAMES", false) {}
+        MainTopBar(
+            title = "API GAMES",
+            false,
+            onClickBackButton = {},
+            onAction = {})
     }
 }
