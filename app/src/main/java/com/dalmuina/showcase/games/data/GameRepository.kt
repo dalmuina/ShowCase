@@ -43,4 +43,19 @@ class GameRepository (private val httpClient: HttpClient) {
        }
     }
 
+    suspend fun getGameByName(name: String?): Result<GameDetail, NetworkError> {
+
+        return if (name!=null) {
+            safeCall<GameDetailDto> {
+                httpClient.get(
+                    urlString = constructUrl("/games/$name")
+                ){
+                    parameter("key", "37f4482fde834c2eacc917b929b0643d")
+                }
+            }.map { response ->
+                response.toGameDetail()
+            }
+        }else Result.Error(NetworkError.UNKNOWN)
+    }
+
 }

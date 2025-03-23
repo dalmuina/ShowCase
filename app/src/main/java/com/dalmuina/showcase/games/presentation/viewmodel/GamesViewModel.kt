@@ -6,8 +6,9 @@ import com.dalmuina.showcase.core.domain.util.onError
 import com.dalmuina.showcase.core.domain.util.onSuccess
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
+import com.dalmuina.showcase.games.domain.usecase.GetGameByNameUseCase
 import com.dalmuina.showcase.games.presentation.GameListAction
-import com.dalmuina.showcase.games.presentation.GameListEvent
+import com.dalmuina.showcase.games.presentation.NetworkErrorEvent
 import com.dalmuina.showcase.games.presentation.model.toGameDetailUi
 import com.dalmuina.showcase.games.presentation.model.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
@@ -22,8 +23,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase,
-    private val getGameByIdUseCase: GetGameByIdUseCase
+class GamesViewModel (
+    private val getAllGamesUseCase: GetAllGamesUseCase,
+    private val getGameByIdUseCase: GetGameByIdUseCase,
+    private val getGameByNameUseCase: GetGameByNameUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(GameListState())
@@ -36,7 +39,7 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase,
             GameListState()
         )
 
-    private val _events  = Channel<GameListEvent>()
+    private val _events  = Channel<NetworkErrorEvent>()
     val events = _events.receiveAsFlow()
 
     private val _detail = MutableStateFlow(GameDetailState())
@@ -72,7 +75,7 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase,
                     _state.update { it.copy(
                         isLoading = false
                     )}
-                    _events.send(GameListEvent.Error(error))
+                    _events.send(NetworkErrorEvent.Error(error))
                 }
 
         }
@@ -93,7 +96,7 @@ class GamesViewModel (private val getAllGamesUseCase: GetAllGamesUseCase,
                     _detail.update { it.copy(
                         isLoading = false
                     )}
-                    _events.send(GameListEvent.Error(error))
+                    _events.send(NetworkErrorEvent.Error(error))
                 }
 
         }

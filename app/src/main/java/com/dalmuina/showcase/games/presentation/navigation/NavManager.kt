@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dalmuina.showcase.games.presentation.DetailView
 import com.dalmuina.showcase.games.presentation.HomeView
+import com.dalmuina.showcase.games.presentation.SearchGamesView
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -20,9 +21,9 @@ fun NavManager(
 ) {
     val navController = rememberNavController()
     val viewModel = koinViewModel<GamesViewModel>()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     NavHost(navController = navController, startDestination = "Home") {
         composable("Home") {
-            val state by viewModel.state.collectAsStateWithLifecycle()
             HomeView(navController = navController,
                 state = state,
                 events = viewModel.events,
@@ -39,6 +40,14 @@ fun NavManager(
                 events = viewModel.events,
                 id= id,
                 modifier = modifier)
+        }
+        composable("SearchGameView"){
+            SearchGamesView(
+                navController = navController,
+                state = state,
+                events = viewModel.events,
+                modifier = modifier
+            )
         }
     }
 }
