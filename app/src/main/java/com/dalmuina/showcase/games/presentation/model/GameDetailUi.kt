@@ -5,7 +5,7 @@ import com.dalmuina.showcase.games.domain.model.GameDetail
 data class GameDetailUi(
     val name :String,
     val descriptionRaw: String,
-    val metacritic: Int,
+    val metacritic: Int?,
     val website: String,
     val backgroundImage: String
 )

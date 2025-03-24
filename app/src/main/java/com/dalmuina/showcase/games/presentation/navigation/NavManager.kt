@@ -29,16 +29,19 @@ fun NavManager(
                 events = viewModel.events,
                 modifier= modifier)
         }
-        composable("DetailView/{id}", arguments = listOf(
-            navArgument("id") { type = NavType.IntType }
+        composable("DetailView/{id}/{name}", arguments = listOf(
+            navArgument("id") { type = NavType.IntType },
+            navArgument("name") {type = NavType.StringType}
         )  ){
             val detail by viewModel.detail.collectAsStateWithLifecycle()
             val id = it.arguments?.getInt("id") ?: 0
+            val name= it.arguments?.getString("name")?:""
             DetailView(navController = navController,
                 detail = detail,
                 onAction = viewModel::onAction,
                 events = viewModel.events,
                 id= id,
+                name = name,
                 modifier = modifier)
         }
         composable("SearchGameView"){

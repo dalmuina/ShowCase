@@ -47,11 +47,16 @@ fun DetailView(
     onAction: (GameListAction) -> Unit,
     events : Flow<NetworkErrorEvent>,
     id: Int,
+    name : String?,
     modifier: Modifier = Modifier
 ) {
     ObserveEvents(events)
     LaunchedEffect(Unit) {
-        onAction(GameListAction.OnLoadGameDetail(id))
+        if (id==0){
+            name?.let{
+                onAction(GameListAction.OnLoadGameDetailSearched(it.replace(" ","-")))
+            }
+        } else onAction(GameListAction.OnLoadGameDetail(id))
     }
 
     DisposableEffect(Unit){
@@ -88,26 +93,29 @@ fun ContentDetailView(pad: PaddingValues, detail: GameDetailState) {
             .padding(pad)
             .background(primaryContainerDark)
     ) {
-        MainImage(imageUrl = detail.gameDetailUi.backgroundImage)
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 5.dp)
-        ) {
-            MetaWebsite(detail.gameDetailUi.website)
-            ReviewCard(detail.gameDetailUi.metacritic)
-        }
+        with(detail.gameDetailUi) {
+            MainImage(imageUrl = backgroundImage)
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 5.dp)
+            ) {
+                MetaWebsite(website)
+                ReviewCard(metacritic)
+            }
 
-        val scroll = rememberScrollState(0)
-        Text(text = detail.gameDetailUi.descriptionRaw,
-            color = Color.White,
-            textAlign = TextAlign.Justify,
-            modifier = Modifier
-                .padding(start = 15.dp, end = 15.dp, bottom = 10.dp)
-                .verticalScroll(scroll)
-        )
+            val scroll = rememberScrollState(0)
+            Text(
+                text = detail.gameDetailUi.descriptionRaw,
+                color = Color.White,
+                textAlign = TextAlign.Justify,
+                modifier = Modifier
+                    .padding(start = 15.dp, end = 15.dp, bottom = 10.dp)
+                    .verticalScroll(scroll)
+            )
+        }
 
     }
 }
