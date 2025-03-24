@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.core.presentation.util
+package com.dalmuina.core.presentation.util
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -7,7 +7,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
-import com.dalmuina.showcase.games.presentation.NetworkErrorEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext

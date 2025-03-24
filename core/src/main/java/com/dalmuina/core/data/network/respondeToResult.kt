@@ -1,10 +1,10 @@
-package com.dalmuina.showcase.core.data.network
+package com.dalmuina.core.data.network
 
-import com.dalmuina.showcase.core.domain.util.NetworkError
+import com.dalmuina.core.domain.util.NetworkError
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
-import com.dalmuina.showcase.core.domain.util.Result
+import com.dalmuina.core.domain.util.Result
 
 suspend inline fun <reified T> responseToResult(
     response: HttpResponse

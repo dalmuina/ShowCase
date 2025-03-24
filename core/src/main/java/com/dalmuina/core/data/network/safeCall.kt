@@ -1,7 +1,7 @@
-package com.dalmuina.showcase.core.data.network
+package com.dalmuina.core.data.network
 
-import com.dalmuina.showcase.core.domain.util.NetworkError
-import com.dalmuina.showcase.core.domain.util.Result
+import com.dalmuina.core.domain.util.NetworkError
+import com.dalmuina.core.domain.util.Result
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.ensureActive
 import kotlinx.serialization.SerializationException

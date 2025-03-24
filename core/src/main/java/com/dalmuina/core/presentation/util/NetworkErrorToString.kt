@@ -1,8 +1,8 @@
-package com.dalmuina.showcase.core.presentation.util
+package com.dalmuina.core.presentation.util
 
 import android.content.Context
-import com.dalmuina.showcase.R
-import com.dalmuina.showcase.core.domain.util.NetworkError
+import com.dalmuina.core.R
+import com.dalmuina.core.domain.util.NetworkError
 
 fun NetworkError.toString(context: Context): String{
     val resId = when(this) {

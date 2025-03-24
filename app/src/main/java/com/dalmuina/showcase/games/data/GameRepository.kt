@@ -1,16 +1,16 @@
 package com.dalmuina.showcase.games.data
 
-import com.dalmuina.showcase.core.data.network.constructUrl
-import com.dalmuina.showcase.core.data.network.safeCall
-import com.dalmuina.showcase.core.domain.util.NetworkError
-import com.dalmuina.showcase.core.domain.util.Result
-import com.dalmuina.showcase.core.domain.util.map
+import com.dalmuina.core.data.network.safeCall
+import com.dalmuina.core.domain.util.NetworkError
+import com.dalmuina.core.domain.util.Result
+import com.dalmuina.core.domain.util.map
 import com.dalmuina.showcase.games.data.network.dto.GameDetailDto
 import com.dalmuina.showcase.games.data.network.dto.GamesResponseDto
 import com.dalmuina.showcase.games.domain.model.Game
 import com.dalmuina.showcase.games.domain.model.GameDetail
 import com.dalmuina.showcase.games.domain.model.toGame
 import com.dalmuina.showcase.games.domain.model.toGameDetail
+import com.dalmuina.showcase.utils.data.network.constructUrl
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter

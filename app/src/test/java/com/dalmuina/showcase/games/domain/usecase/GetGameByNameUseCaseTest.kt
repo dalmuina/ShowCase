@@ -1,7 +1,7 @@
 package com.dalmuina.showcase.games.domain.usecase
 
-import com.dalmuina.showcase.core.domain.util.NetworkError
-import com.dalmuina.showcase.core.domain.util.Result
+import com.dalmuina.core.domain.util.NetworkError
+import com.dalmuina.core.domain.util.Result
 import com.dalmuina.showcase.games.data.GameRepository
 import com.dalmuina.showcase.games.domain.model.GameDetail
 import io.mockk.MockKAnnotations
@@ -49,7 +49,8 @@ class GetGameByNameUseCaseTest {
         // Test if the use case handles an empty game name correctly,
         // potentially returning an error or a default result.
     //Given
-        val mockResult : Result<GameDetail, NetworkError> = Result.Error(NetworkError.UNKNOWN)
+        val mockResult : Result<GameDetail, NetworkError> = Result.Error(
+            NetworkError.UNKNOWN)
         coEvery { repository.getGameByName("") } returns mockResult
     //When
         val result = getGameByNameUseCase("")
@@ -69,7 +70,7 @@ class GetGameByNameUseCaseTest {
             website = "website url",
             backgroundImage = "background image"
         )
-        val mockResult : Result<GameDetail,Nothing> = Result.Success(mockGameDetail)
+        val mockResult : Result<GameDetail, Nothing> = Result.Success(mockGameDetail)
         coEvery { repository.getGameByName("GTA V: Special Edition!@#") } returns mockResult
         //When
         val result = getGameByNameUseCase("GTA V: Special Edition!@#")
@@ -119,7 +120,8 @@ class GetGameByNameUseCaseTest {
         // Test if the use case correctly propagates a NetworkError from the repository
         // when a network issue occurs.
         // Given
-        val mockResult: Result<GameDetail, NetworkError> = Result.Error(NetworkError.NO_INTERNET)
+        val mockResult: Result<GameDetail, NetworkError> = Result.Error(
+            NetworkError.NO_INTERNET)
         coEvery { repository.getGameByName("Gta V") } returns mockResult
 
         // When
@@ -134,7 +136,8 @@ class GetGameByNameUseCaseTest {
         // Test if the use case correctly propagates a NetworkError from the repository
         // when it indicates a data issue.
         // Given
-        val mockResult: Result<GameDetail, NetworkError> = Result.Error(NetworkError.SERIALIZATION)
+        val mockResult: Result<GameDetail, NetworkError> = Result.Error(
+            NetworkError.SERIALIZATION)
         coEvery { repository.getGameByName("Gta V") } returns mockResult
 
         // When
@@ -149,7 +152,8 @@ class GetGameByNameUseCaseTest {
         // Test if the use case correctly handles the scenario where the repository indicates
         // that a game with the given name was not found, potentially returning a specific error.
         // Given
-        val mockResult: Result<GameDetail, NetworkError> = Result.Error(NetworkError.UNKNOWN)
+        val mockResult: Result<GameDetail, NetworkError> = Result.Error(
+            NetworkError.UNKNOWN)
         coEvery { repository.getGameByName("Unknown Game") } returns mockResult
 
         // When
@@ -165,7 +169,8 @@ class GetGameByNameUseCaseTest {
         // buffer overflow or performance issues.
         // Given
         val longName = "a".repeat(10000)
-        val mockResult: Result<GameDetail, NetworkError> = Result.Error(NetworkError.UNKNOWN)
+        val mockResult: Result<GameDetail, NetworkError> = Result.Error(
+            NetworkError.UNKNOWN)
         coEvery { repository.getGameByName(longName) } returns mockResult
 
         // When
