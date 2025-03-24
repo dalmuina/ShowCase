@@ -27,7 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dalmuina.showcase.core.presentation.util.ObserveEvents
+import com.dalmuina.core.presentation.util.NetworkErrorEvent
+import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.component.MainImage
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
 import com.dalmuina.showcase.games.presentation.component.MetaWebsite

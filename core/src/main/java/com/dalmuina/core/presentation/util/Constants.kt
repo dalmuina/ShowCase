@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.core.presentation.util
+package com.dalmuina.core.presentation.util
 
 object Constants {
     const val URL_BASE = "https://api.rawg.io/api/"

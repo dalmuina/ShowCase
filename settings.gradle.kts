@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ShowCase"
 include(":app")
+include(":core")

@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.core.domain.util
+package com.dalmuina.core.domain.util
 
 
 enum class NetworkError: Error {

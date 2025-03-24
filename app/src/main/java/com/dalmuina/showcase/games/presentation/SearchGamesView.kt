@@ -33,7 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.dalmuina.showcase.core.presentation.util.ObserveEvents
+import com.dalmuina.core.presentation.util.NetworkErrorEvent
+import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import kotlinx.coroutines.flow.Flow
 

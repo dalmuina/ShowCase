@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.core.data.network
+package com.dalmuina.showcase.utils.data.network
 
 import com.dalmuina.showcase.BuildConfig
 
