@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 
 @Composable
-fun ReviewCard(metascore: Int){
+fun ReviewCard(metascore: Int?=null){
     Card(
         modifier = Modifier
             .padding(16.dp),
@@ -29,10 +29,10 @@ fun ReviewCard(metascore: Int){
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Text(text= metascore.toString(),
+            Text(text= metascore?.toString() ?: "n/a",
                 color = Color.White,
                 fontWeight = FontWeight.ExtraBold,
-                fontSize= 50.sp)
+                fontSize= 45.sp)
         }
     }
 }
@@ -42,7 +42,7 @@ fun ReviewCard(metascore: Int){
 private fun ReviewCardPreview() {
     ShowCaseTheme {
         ReviewCard(
-            metascore = 45
+            metascore = null
         )
     }
 }

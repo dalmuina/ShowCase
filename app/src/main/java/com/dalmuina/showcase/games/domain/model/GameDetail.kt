@@ -5,7 +5,7 @@ import com.dalmuina.showcase.games.data.network.dto.GameDetailDto
 data class GameDetail(
     val name : String,
     val descriptionRaw : String,
-    val metacritic: Int,
+    val metacritic: Int?,
     val website : String,
     val backgroundImage: String
 )

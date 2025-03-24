@@ -7,6 +7,7 @@ import com.dalmuina.core.domain.util.onSuccess
 import com.dalmuina.core.presentation.util.NetworkErrorEvent
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
+import com.dalmuina.showcase.games.domain.usecase.GetGameByNameUseCase
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.model.toGameDetailUi
 import com.dalmuina.showcase.games.presentation.model.toGameUi
@@ -24,7 +25,8 @@ import kotlinx.coroutines.launch
 
 class GamesViewModel (
     private val getAllGamesUseCase: GetAllGamesUseCase,
-    private val getGameByIdUseCase: GetGameByIdUseCase
+    private val getGameByIdUseCase: GetGameByIdUseCase,
+    private val getGameByNameUseCase: GetGameByNameUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(GameListState())
@@ -51,6 +53,9 @@ class GamesViewModel (
             is GameListAction.OnGameClick -> TODO()
             is GameListAction.OnLoadGameDetail -> {
                 loadGameDetail(action.id)
+            }
+            is GameListAction.OnLoadGameDetailSearched -> {
+                loadGameDetailSearched(action.search)
             }
         }
     }
@@ -85,6 +90,27 @@ class GamesViewModel (
                 isLoading = true
             )}
             getGameByIdUseCase(id)
+                .onSuccess { game->
+                    _detail.update {it.copy(
+                        isLoading = false,
+                        gameDetailUi = game.toGameDetailUi(),
+                    )}
+                }.onError {error ->
+                    _detail.update { it.copy(
+                        isLoading = false
+                    )}
+                    _events.send(NetworkErrorEvent.Error(error))
+                }
+
+        }
+    }
+
+    fun loadGameDetailSearched(search : String){
+        viewModelScope.launch {
+            _detail.update { it.copy(
+                isLoading = true
+            )}
+            getGameByNameUseCase(search)
                 .onSuccess { game->
                     _detail.update {it.copy(
                         isLoading = false,

@@ -31,7 +31,7 @@ fun MetaWebsite(url:String){
             fontWeight = FontWeight.ExtraBold,
             fontSize = 30.sp,
             modifier = Modifier.padding(top = 10.dp,bottom = 10.dp))
-        Button(onClick = {context.startActivity(intent)},
+        Button(onClick = {if (url.isNotBlank() and url.isNotEmpty()) context.startActivity(intent)},
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Gray,
                 contentColor = Color.White)
