@@ -3,6 +3,9 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="ShowCase.app.core" target="21" />
+      <module name="ShowCase.di" target="11" />
+      <module name="ShowCase.di.main" target="11" />
+      <module name="ShowCase.di.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
