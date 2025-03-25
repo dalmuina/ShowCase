@@ -32,21 +32,46 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.dalmuina.core.presentation.util.NetworkErrorEvent
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.state.GameListState
-import kotlinx.coroutines.flow.Flow
+import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchGamesView(
     navController: NavController,
-    state: GameListState,
-    events : Flow<NetworkErrorEvent>,
+    viewModel: GamesViewModel,
     modifier: Modifier = Modifier
 ) {
-    ObserveEvents(events = events)
+
+    ObserveEvents(viewModel.events)
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    SearchGamesViewScreen(
+        modifier,
+        state,
+        onAction = {action ->
+            when(action) {
+                is GameListAction.OnLoadGameDetail -> {
+                    navController.navigate("DetailView/${action.id}/")
+                }
+                GameListAction.OnBackButtonClick -> {
+                    navController.popBackStack()
+                }
+                else -> viewModel.onAction(action)
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchGamesViewScreen(
+    modifier: Modifier = Modifier,
+    state: GameListState,
+    onAction:(GameListAction)->Unit
+) {
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
 
@@ -57,7 +82,7 @@ fun SearchGamesView(
                 .padding(it)
                 .padding(horizontal = 16.dp),
 
-        ) {
+            ) {
             SearchBar(
                 modifier = modifier.fillMaxWidth(),
                 inputField = {
@@ -76,7 +101,7 @@ fun SearchGamesView(
                                     if (query.isNotEmpty()) {
                                         query= ""
                                     } else {
-                                        navController.popBackStack()
+                                        onAction(GameListAction.OnBackButtonClick)
                                     }
                                 }
                             )
@@ -90,7 +115,7 @@ fun SearchGamesView(
                         modifier = modifier
                             .fillMaxWidth()
                             .onFocusChanged { focusState ->
-                                if (focusState.isFocused){
+                                if (focusState.isFocused) {
                                     active = true
                                 }
                             }
@@ -120,7 +145,7 @@ fun SearchGamesView(
                                     modifier = Modifier
                                         .padding(bottom = 10.dp, start = 10.dp)
                                         .clickable {
-                                            navController.navigate("DetailView/${game.id}")
+                                            onAction(GameListAction.OnLoadGameDetail(game.id))
                                         }
                                 )
                             }
@@ -146,7 +171,7 @@ fun SearchGamesView(
                             modifier = Modifier
                                 .padding(bottom = 10.dp, start = 10.dp)
                                 .clickable {
-                                    navController.navigate("DetailView/${game.id}")
+                                    onAction(GameListAction.OnLoadGameDetail(game.id))
                                 }
                         )
                     }

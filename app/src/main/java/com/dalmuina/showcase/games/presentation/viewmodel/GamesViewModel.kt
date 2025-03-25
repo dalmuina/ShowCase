@@ -50,13 +50,14 @@ class GamesViewModel (
             GameListAction.OnBackButtonClick -> {
                 clean()
             }
-            is GameListAction.OnGameClick -> TODO()
+            is GameListAction.OnGameClick -> Unit
             is GameListAction.OnLoadGameDetail -> {
                 loadGameDetail(action.id)
             }
             is GameListAction.OnLoadGameDetailSearched -> {
                 loadGameDetailSearched(action.search)
             }
+            is GameListAction.NavigateToGame -> Unit
         }
     }
 

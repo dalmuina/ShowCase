@@ -18,7 +18,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,8 +25,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.dalmuina.core.presentation.util.NetworkErrorEvent
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.component.MainImage
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
@@ -35,22 +35,54 @@ import com.dalmuina.showcase.games.presentation.component.MetaWebsite
 import com.dalmuina.showcase.games.presentation.component.ReviewCard
 import com.dalmuina.showcase.games.presentation.model.GameDetailUi
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
+import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
-import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailView(
     navController: NavController,
-    detail : GameDetailState,
-    onAction: (GameListAction) -> Unit,
-    events : Flow<NetworkErrorEvent>,
+    viewModel: GamesViewModel,
     id: Int,
     name : String?,
     modifier: Modifier = Modifier
 ) {
-    ObserveEvents(events)
+    ObserveEvents(viewModel.events)
+    val detail by viewModel.detail.collectAsStateWithLifecycle()
+
+    DetailViewScreen(
+        detail = detail,
+        modifier = modifier,
+        id = id,
+        name = name,
+        onAction = { action ->
+            when (action) {
+                is GameListAction.OnLoadGameDetail -> {
+                    viewModel.onAction(action)
+                }
+                is GameListAction.OnLoadGameDetailSearched -> {
+                    viewModel.onAction(action)
+                }
+                GameListAction.OnBackButtonClick -> {
+                    viewModel.onAction(action)
+                    navController.popBackStack()
+                }
+                else -> Unit // Handle other actions if needed
+            }
+        }
+    )
+
+
+}
+
+@Composable
+fun DetailViewScreen(detail: GameDetailState,
+                     modifier: Modifier,
+                     id: Int,
+                     name: String?,
+                     onAction:(GameListAction)->Unit
+){
     LaunchedEffect(Unit) {
         if (id==0){
             name?.let{
@@ -59,11 +91,6 @@ fun DetailView(
         } else onAction(GameListAction.OnLoadGameDetail(id))
     }
 
-    DisposableEffect(Unit){
-        onDispose {
-            onAction(GameListAction.OnBackButtonClick)
-        }
-    }
     if (detail.isLoading) {
         Box(
             modifier = modifier
@@ -76,8 +103,11 @@ fun DetailView(
         Scaffold(
             modifier = modifier,
             topBar = {
-                MainTopBar (title = detail.gameDetailUi.name, showBackButton = true, onClickBackButton = {
-                    navController.popBackStack() }, onAction = {})
+                MainTopBar (
+                    title = detail.gameDetailUi.name,
+                    showBackButton = true,
+                    onClickBackButton = { onAction(GameListAction.OnBackButtonClick) },
+                    onAction = {})
             }
         ) {
             ContentDetailView(it, detail)

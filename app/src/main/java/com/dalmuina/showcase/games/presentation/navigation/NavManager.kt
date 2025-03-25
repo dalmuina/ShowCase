@@ -21,34 +21,36 @@ fun NavManager(
 ) {
     val navController = rememberNavController()
     val viewModel = koinViewModel<GamesViewModel>()
-    val state by viewModel.state.collectAsStateWithLifecycle()
     NavHost(navController = navController, startDestination = "Home") {
         composable("Home") {
-            HomeView(navController = navController,
-                state = state,
-                events = viewModel.events,
-                modifier= modifier)
+            HomeView(
+                navController = navController,
+                viewModel = viewModel,
+                modifier= modifier
+            )
         }
-        composable("DetailView/{id}/{name}", arguments = listOf(
+        composable("DetailView/{id}/?{name}", arguments = listOf(
             navArgument("id") { type = NavType.IntType },
-            navArgument("name") {type = NavType.StringType}
+            navArgument("name") {
+                type = NavType.StringType
+                nullable= true
+                defaultValue = ""
+            }
         )  ){
-            val detail by viewModel.detail.collectAsStateWithLifecycle()
             val id = it.arguments?.getInt("id") ?: 0
             val name= it.arguments?.getString("name")?:""
-            DetailView(navController = navController,
-                detail = detail,
-                onAction = viewModel::onAction,
-                events = viewModel.events,
+            DetailView(
+                navController = navController,
+                viewModel = viewModel,
                 id= id,
                 name = name,
-                modifier = modifier)
+                modifier = modifier
+            )
         }
         composable("SearchGameView"){
             SearchGamesView(
                 navController = navController,
-                state = state,
-                events = viewModel.events,
+                viewModel = viewModel,
                 modifier = modifier
             )
         }
