@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
@@ -30,33 +29,57 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp import androidx.navigation.NavController
-import com.dalmuina.core.presentation.util.NetworkErrorEvent
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.component.CardGame
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
 import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.state.GameListState
+import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeView(
     navController: NavController,
-    state : GameListState,
-    events : Flow<NetworkErrorEvent>,
+    viewModel: GamesViewModel,
     modifier: Modifier = Modifier,
 ){
-    ObserveEvents(events)
+    ObserveEvents(viewModel.events)
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    HomeViewScreen(
+        state = state,
+        modifier = modifier,
+        onAction = { action ->
+            when(action) {
+                is GameListAction.NavigateToGame -> navController.navigate("SearchGameView")
+                is GameListAction.OnLoadGameDetail -> {
+                    navController.navigate("DetailView/${action.id}/")
+                }
+                is GameListAction.OnLoadGameDetailSearched -> {
+                    navController.navigate("DetailView/0/?${action.search}")
+                }
+                else -> viewModel.onAction(action)
+            }
+        }
+    )
+}
+
+@Composable
+fun HomeViewScreen(state: GameListState,
+                   modifier: Modifier,
+                   onAction:(GameListAction)->Unit
+){
     Scaffold(
         modifier = modifier,
         topBar = {
             MainTopBar(title = "API GAMES", onClickBackButton = {}){
-                navController.navigate("SearchGameView")
+                onAction(GameListAction.NavigateToGame("SearchGameView"))
             }
         }
-    ) {
+    ) {padding->
         if (state.isLoading) {
             Box(
                 modifier = modifier
@@ -66,19 +89,17 @@ fun HomeView(
                 CircularProgressIndicator()
             }
         } else {
-            ContentHomeView(it, state.games, onSearchChanged = { search ->
-                val zero = 0
-                navController.navigate("DetailView/${zero}/${search}")
-            }) {
-                navController.navigate("DetailView/${it}/${""}")
-            }
+            ContentHomeView(
+                pad = padding,
+                games = state.games,
+                onAction = { action -> onAction(action) }
+            )
         }
     }
 }
 
-
 @Composable
-fun ContentHomeView(pad: PaddingValues, games: List<GameUi>, onSearchChanged:(String)->Unit, onClick:(Int)->Unit){
+fun ContentHomeView(pad: PaddingValues, games: List<GameUi>, onAction: (GameListAction) -> Unit){
     var search by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -95,7 +116,7 @@ fun ContentHomeView(pad: PaddingValues, games: List<GameUi>, onSearchChanged:(St
             ),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    onSearchChanged(search)
+                    onAction(GameListAction.OnLoadGameDetailSearched(search))
                 }
             ),
             modifier = Modifier
@@ -111,7 +132,7 @@ fun ContentHomeView(pad: PaddingValues, games: List<GameUi>, onSearchChanged:(St
         ){
             items(games){ item ->
                 CardGame(item) {
-                    onClick(item.id)
+                    onAction(GameListAction.OnLoadGameDetail(item.id))
                 }
 
                 Text(text = item.name,
@@ -137,8 +158,7 @@ fun PreviewContentHomeView() {
         ContentHomeView(
             pad = PaddingValues(16.dp),
             games = mockGames,
-            onSearchChanged = {},
-            onClick = {}
+            onAction = { action->}
         )
     }
 }

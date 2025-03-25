@@ -7,4 +7,5 @@ sealed interface GameListAction {
     data class OnLoadGameDetail(val id: Int): GameListAction
     data class OnLoadGameDetailSearched(val search: String): GameListAction
     object OnBackButtonClick: GameListAction
+    data class NavigateToGame(val screen: String): GameListAction
 }
