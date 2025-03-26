@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result
-import com.dalmuina.showcase.di.testDispatcherModule
 import com.dalmuina.showcase.games.domain.model.Game
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
