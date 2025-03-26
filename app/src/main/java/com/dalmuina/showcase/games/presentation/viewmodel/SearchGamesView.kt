@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation
+package com.dalmuina.showcase.games.presentation.viewmodel
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.dalmuina.core.presentation.util.ObserveEvents
+import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.state.GameListState
-import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

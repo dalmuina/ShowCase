@@ -13,6 +13,7 @@ import com.dalmuina.showcase.games.presentation.model.toGameDetailUi
 import com.dalmuina.showcase.games.presentation.model.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.state.GameListState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 class GamesViewModel (
     private val getAllGamesUseCase: GetAllGamesUseCase,
@@ -62,7 +64,7 @@ class GamesViewModel (
     }
 
     private fun fetchGames(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(
                 isLoading = true
             )}
@@ -86,7 +88,7 @@ class GamesViewModel (
     }
 
     fun loadGameDetail(id : Int){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _detail.update { it.copy(
                 isLoading = true
             )}
@@ -107,7 +109,7 @@ class GamesViewModel (
     }
 
     fun loadGameDetailSearched(search : String){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _detail.update { it.copy(
                 isLoading = true
             )}
