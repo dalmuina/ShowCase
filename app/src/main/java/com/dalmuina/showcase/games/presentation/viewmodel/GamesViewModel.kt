@@ -13,7 +13,8 @@ import com.dalmuina.showcase.games.presentation.model.toGameDetailUi
 import com.dalmuina.showcase.games.presentation.model.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.state.GameListState
-import com.dalmuina.showcase.utils.presentation.DispatcherProvider
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +26,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GamesViewModel (
-    private val dispatchers: DispatcherProvider,
     private val getAllGamesUseCase: GetAllGamesUseCase,
     private val getGameByIdUseCase: GetGameByIdUseCase,
     private val getGameByNameUseCase: GetGameByNameUseCase
@@ -64,7 +64,9 @@ class GamesViewModel (
     }
 
     private fun fetchGames(){
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch(Dispatchers.IO) {
+            println("Coroutine running on: ${Thread.currentThread().name}")
+            println("Current dispatcher: ${coroutineContext[CoroutineDispatcher]}")
             _state.update { it.copy(
                 isLoading = true
             )}
@@ -88,7 +90,7 @@ class GamesViewModel (
     }
 
     fun loadGameDetail(id : Int){
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch(Dispatchers.IO) {
             _detail.update { it.copy(
                 isLoading = true
             )}
@@ -109,7 +111,7 @@ class GamesViewModel (
     }
 
     fun loadGameDetailSearched(search : String){
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch(Dispatchers.IO) {
             _detail.update { it.copy(
                 isLoading = true
             )}

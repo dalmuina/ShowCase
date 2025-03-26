@@ -101,5 +101,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     testImplementation (libs.koin.test)
-    //testImplementation ("io.insert-koin:koin-test-junit4:3.5.0") // Optional, if using JUnit4 helpers
+    testImplementation ("io.insert-koin:koin-test-junit4:3.5.0")
+    testImplementation(libs.androidx.core.testing)
 }
