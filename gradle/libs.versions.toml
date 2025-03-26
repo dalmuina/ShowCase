@@ -25,7 +25,6 @@ material3-adaptive = "1.1.0"
 compose-material-icons-extended = "1.7.8"
 desugar-jdk-libs = "2.1.5"
 jetbrainsKotlinJvm = "2.0.0"
-pagingCompose = "3.3.6"
 coreTesting = "2.2.0"
 
 [libraries]
