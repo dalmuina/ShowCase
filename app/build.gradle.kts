@@ -97,5 +97,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     testImplementation (libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
+    testImplementation (libs.koin.test)
+    //testImplementation ("io.insert-koin:koin-test-junit4:3.5.0") // Optional, if using JUnit4 helpers
 }
