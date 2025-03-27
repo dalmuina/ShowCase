@@ -66,8 +66,6 @@ class GamesViewModel (
 
     private fun fetchGames(){
         viewModelScope.launch(dispatcher) {
-            println("Coroutine running on: ${Thread.currentThread().name}")
-            println("Current dispatcher: ${coroutineContext[CoroutineDispatcher]}")
             _state.update { it.copy(
                 isLoading = true
             )}
