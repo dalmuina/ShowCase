@@ -2,9 +2,15 @@ package com.dalmuina.showcase.games.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.dalmuina.core.domain.util.onError
 import com.dalmuina.core.domain.util.onSuccess
 import com.dalmuina.core.presentation.util.NetworkErrorEvent
+import com.dalmuina.showcase.games.data.GameRepository
+import com.dalmuina.showcase.games.domain.usecase.GamesDataSource
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByNameUseCase
@@ -19,6 +25,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -26,6 +33,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GamesViewModel (
+    private val repository: GameRepository,
     private val getAllGamesUseCase: GetAllGamesUseCase,
     private val getGameByIdUseCase: GetGameByIdUseCase,
     private val getGameByNameUseCase: GetGameByNameUseCase,
@@ -47,6 +55,19 @@ class GamesViewModel (
 
     private val _detail = MutableStateFlow(GameDetailState())
     val detail = _detail.asStateFlow()
+
+    val gamesPagingFlow = Pager(
+        PagingConfig(
+            pageSize = 10,
+            enablePlaceholders = false
+        )
+    ) {
+        GamesDataSource(repository)
+    }.flow
+        .map { pagingData ->
+            pagingData.map { it.toGameUi() }
+        }
+        .cachedIn(viewModelScope)
 
     fun onAction(action: GameListAction){
         when(action) {
