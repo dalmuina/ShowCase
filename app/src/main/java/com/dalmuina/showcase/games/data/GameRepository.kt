@@ -31,6 +31,23 @@ class GameRepository (private val httpClient: HttpClient) {
         }
     }
 
+    suspend fun getAllGamesPagingFromApi(page:Int,pageSize:Int): Result<List<Game>, NetworkError>{
+        return safeCall<GamesResponseDto> {
+            httpClient.get(
+                urlString = constructUrl("/games")
+            ){
+                parameter("key", "37f4482fde834c2eacc917b929b0643d")
+                parameter("page", page)
+                parameter("page_size", pageSize)
+
+            }
+        }.map { response ->
+            response.results.map {
+                it.toGame()
+            }
+        }
+    }
+
    suspend fun getGameById(id: Int): Result<GameDetail, NetworkError> {
        return safeCall<GameDetailDto> {
            httpClient.get(
