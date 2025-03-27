@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result
+import com.dalmuina.showcase.games.data.GameRepository
 import com.dalmuina.showcase.games.domain.model.Game
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
@@ -17,9 +18,7 @@ import io.mockk.junit4.MockKRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +32,9 @@ class GamesViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @RelaxedMockK
+    private lateinit var repository: GameRepository
 
     @RelaxedMockK
     private lateinit var getAllGamesUseCase: GetAllGamesUseCase
@@ -53,16 +55,12 @@ class GamesViewModelTest {
     fun setUp() {
         MockKAnnotations.init(this)
         viewModel = GamesViewModel(
+            repository,
             getAllGamesUseCase,
             getGameByIdUseCase,
             getGameByNameUseCase,
             testDispatcher
         )
-
-    }
-
-    @After
-    fun tearDown() {
 
     }
 

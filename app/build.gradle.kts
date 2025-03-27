@@ -88,6 +88,9 @@ dependencies {
     //Koin
     implementation(libs.bundles.koin)
 
+    //Paging
+    implementation(libs.bundles.paging)
+
     //Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
