@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
+import com.dalmuina.showcase.games.presentation.navigation.Detail
 import com.dalmuina.showcase.games.presentation.state.GameListState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +55,7 @@ fun SearchGamesView(
         onAction = {action ->
             when(action) {
                 is GameListAction.OnLoadGameDetail -> {
-                    navController.navigate("DetailView/${action.id}/")
+                    navController.navigate(Detail(action.id,null))
                 }
                 GameListAction.OnBackButtonClick -> {
                     navController.popBackStack()

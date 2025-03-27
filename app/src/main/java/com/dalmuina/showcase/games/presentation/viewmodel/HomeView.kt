@@ -37,6 +37,8 @@ import com.dalmuina.showcase.games.presentation.component.FullScreenLoading
 import com.dalmuina.showcase.games.presentation.component.LoadingItem
 import com.dalmuina.showcase.games.presentation.component.MainTopBar
 import com.dalmuina.showcase.games.presentation.model.GameUi
+import com.dalmuina.showcase.games.presentation.navigation.Detail
+import com.dalmuina.showcase.games.presentation.navigation.SearchGameView
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
 @Composable
@@ -53,12 +55,12 @@ fun HomeView(
         modifier = modifier,
         onAction = { action ->
             when(action) {
-                is GameListAction.NavigateToGame -> navController.navigate("SearchGameView")
+                is GameListAction.NavigateToGame -> navController.navigate(SearchGameView)
                 is GameListAction.OnLoadGameDetail -> {
-                    navController.navigate("DetailView/${action.id}/")
+                    navController.navigate(Detail(action.id, null))
                 }
                 is GameListAction.OnLoadGameDetailSearched -> {
-                    navController.navigate("DetailView/0/?${action.search}")
+                    navController.navigate(Detail(0,action.search))
                 }
                 else -> viewModel.onAction(action)
             }
