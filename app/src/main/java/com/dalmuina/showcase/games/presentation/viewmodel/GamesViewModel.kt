@@ -28,7 +28,8 @@ import kotlinx.coroutines.launch
 class GamesViewModel (
     private val getAllGamesUseCase: GetAllGamesUseCase,
     private val getGameByIdUseCase: GetGameByIdUseCase,
-    private val getGameByNameUseCase: GetGameByNameUseCase
+    private val getGameByNameUseCase: GetGameByNameUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(GameListState())
@@ -64,9 +65,7 @@ class GamesViewModel (
     }
 
     private fun fetchGames(){
-        viewModelScope.launch(Dispatchers.IO) {
-            println("Coroutine running on: ${Thread.currentThread().name}")
-            println("Current dispatcher: ${coroutineContext[CoroutineDispatcher]}")
+        viewModelScope.launch(dispatcher) {
             _state.update { it.copy(
                 isLoading = true
             )}
@@ -90,7 +89,7 @@ class GamesViewModel (
     }
 
     fun loadGameDetail(id : Int){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             _detail.update { it.copy(
                 isLoading = true
             )}
@@ -111,7 +110,7 @@ class GamesViewModel (
     }
 
     fun loadGameDetailSearched(search : String){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             _detail.update { it.copy(
                 isLoading = true
             )}
