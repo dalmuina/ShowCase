@@ -17,6 +17,7 @@ import io.mockk.junit4.MockKRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -47,28 +48,29 @@ class GamesViewModelTest {
 
     private lateinit var viewModel: GamesViewModel
 
-
+    private val testDispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(testDispatcher)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        Dispatchers.setMain(StandardTestDispatcher())
         viewModel = GamesViewModel(
             getAllGamesUseCase,
             getGameByIdUseCase,
-            getGameByNameUseCase
+            getGameByNameUseCase,
+            testDispatcher
         )
 
     }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
+
     }
 
     @Test
-    fun `initial state should be loading with empty data`() = runTest {
+    fun `initial state should be loading with empty data`() = testScope.runTest {
         //Test the behavior of `fetchGames` when the useCase returns an empty game list.
         //Given
         val mockGames = emptyList<Game>()
@@ -83,7 +85,7 @@ class GamesViewModelTest {
     }
 
     @Test
-    fun `fetchGames successful retrieval`() = runTest{
+    fun `fetchGames successful retrieval`() = testScope.runTest{
         // Verify that `fetchGames` successfully retrieves a list of games and updates
         //Given
         val mockGame = Game(1,"GTA V", "GTA V description")
@@ -105,7 +107,7 @@ class GamesViewModelTest {
     }
 
     @Test
-    fun `fetchGames game retrieval failure`() = runTest{
+    fun `fetchGames game retrieval failure`() = testScope.runTest{
         // Verify that `fetchGames` handles errors when retrieving games.
         //Given
         coEvery { getAllGamesUseCase() } returns Result.Error<NetworkError>(NetworkError.SERVER_ERROR)
