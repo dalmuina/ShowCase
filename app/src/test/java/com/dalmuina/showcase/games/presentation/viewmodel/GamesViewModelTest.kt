@@ -28,7 +28,7 @@ import org.koin.test.KoinTest
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GamesViewModelTest: KoinTest {
+class GamesViewModelTest {
 
     @get:Rule
     val mockkRule = MockKRule(this)
