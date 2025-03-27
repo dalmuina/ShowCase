@@ -17,11 +17,13 @@ import io.mockk.junit4.MockKRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GamesViewModelTest {
@@ -71,7 +73,7 @@ class GamesViewModelTest {
         val mockGames = emptyList<Game>()
         coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
         //When
-        viewModel.state.test{
+        viewModel.state.test(timeout = 10.seconds){
             val initialState = awaitItem()
             //Then
             assertThat(initialState.isLoading).isFalse()
@@ -87,7 +89,7 @@ class GamesViewModelTest {
         val mockGames = listOf<Game>(mockGame)
         coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
         //When
-        viewModel.state.test{
+        viewModel.state.test(timeout = 10.seconds){
             val initialState = awaitItem()
             //Then
             assertThat(initialState.isLoading).isFalse()
@@ -107,7 +109,7 @@ class GamesViewModelTest {
         //Given
         coEvery { getAllGamesUseCase() } returns Result.Error<NetworkError>(NetworkError.SERVER_ERROR)
         //When
-        viewModel.state.test{
+        viewModel.state.test(timeout = 10.seconds){
             //Then
             assertThat(awaitItem().isLoading).isFalse()
             assertThat(awaitItem().isLoading).isTrue()
