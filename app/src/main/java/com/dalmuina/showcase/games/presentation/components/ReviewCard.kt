@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.component
+package com.dalmuina.showcase.games.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

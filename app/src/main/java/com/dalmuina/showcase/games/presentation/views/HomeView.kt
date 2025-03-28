@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.viewmodel
+package com.dalmuina.showcase.games.presentation.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,12 +31,15 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
-import com.dalmuina.showcase.games.presentation.component.CardGame
-import com.dalmuina.showcase.games.presentation.component.ErrorItem
-import com.dalmuina.showcase.games.presentation.component.FullScreenLoading
-import com.dalmuina.showcase.games.presentation.component.LoadingItem
-import com.dalmuina.showcase.games.presentation.component.MainTopBar
+import com.dalmuina.showcase.games.presentation.components.CardGame
+import com.dalmuina.showcase.games.presentation.components.ErrorItem
+import com.dalmuina.showcase.games.presentation.components.FullScreenLoading
+import com.dalmuina.showcase.games.presentation.components.Loader
+import com.dalmuina.showcase.games.presentation.components.MainTopBar
 import com.dalmuina.showcase.games.presentation.model.GameUi
+import com.dalmuina.showcase.games.presentation.navigation.Detail
+import com.dalmuina.showcase.games.presentation.navigation.SearchGameView
+import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
 @Composable
@@ -53,12 +56,12 @@ fun HomeView(
         modifier = modifier,
         onAction = { action ->
             when(action) {
-                is GameListAction.NavigateToGame -> navController.navigate("SearchGameView")
+                is GameListAction.NavigateToGame -> navController.navigate(SearchGameView)
                 is GameListAction.OnLoadGameDetail -> {
-                    navController.navigate("DetailView/${action.id}/")
+                    navController.navigate(Detail(action.id, null))
                 }
                 is GameListAction.OnLoadGameDetailSearched -> {
-                    navController.navigate("DetailView/0/?${action.search}")
+                    navController.navigate(Detail(0,action.search))
                 }
                 else -> viewModel.onAction(action)
             }
@@ -131,7 +134,7 @@ fun GameListContent(
                     item { FullScreenLoading() }
                 }
                 loadState.append is LoadState.Loading -> {
-                    item { LoadingItem() }
+                    item { Loader() }
                 }
                 loadState.refresh is LoadState.Error -> {
                     item { ErrorItem(onRetry = { retry() }) }

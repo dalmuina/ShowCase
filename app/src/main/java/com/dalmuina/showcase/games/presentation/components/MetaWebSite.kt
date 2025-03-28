@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.component
+package com.dalmuina.showcase.games.presentation.components
 
 import android.annotation.SuppressLint
 import android.content.Intent
