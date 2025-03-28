@@ -39,7 +39,9 @@ class GamesViewModel (
     private val getGameByNameUseCase: GetGameByNameUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
-
+    //This project has 2 different ways to fetch information
+    //for academic reasons
+    //Fetch games for the SearchViewPage, Pager for the HomeView
     private val _state = MutableStateFlow(GameListState())
     val state = _state
         .onStart {
@@ -49,12 +51,6 @@ class GamesViewModel (
             SharingStarted.WhileSubscribed(5000L),
             GameListState()
         )
-
-    private val _events  = Channel<NetworkErrorEvent>()
-    val events = _events.receiveAsFlow()
-
-    private val _detail = MutableStateFlow(GameDetailState())
-    val detail = _detail.asStateFlow()
 
     val gamesPagingFlow = Pager(
         PagingConfig(
@@ -68,6 +64,12 @@ class GamesViewModel (
             pagingData.map { it.toGameUi() }
         }
         .cachedIn(viewModelScope)
+
+    private val _events  = Channel<NetworkErrorEvent>()
+    val events = _events.receiveAsFlow()
+
+    private val _detail = MutableStateFlow(GameDetailState())
+    val detail = _detail.asStateFlow()
 
     fun onAction(action: GameListAction){
         when(action) {
