@@ -71,7 +71,7 @@ class GamesViewModelTest {
         val mockGames = emptyList<Game>()
         coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
         //When
-        viewModel.state.test(timeout = 10.seconds){
+        viewModel.state.test(){
             val initialState = awaitItem()
             //Then
             assertThat(initialState.isLoading).isFalse()
@@ -87,7 +87,7 @@ class GamesViewModelTest {
         val mockGames = listOf<Game>(mockGame)
         coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
         //When
-        viewModel.state.test(timeout = 10.seconds){
+        viewModel.state.test(){
             val initialState = awaitItem()
             //Then
             assertThat(initialState.isLoading).isFalse()
@@ -107,7 +107,7 @@ class GamesViewModelTest {
         //Given
         coEvery { getAllGamesUseCase() } returns Result.Error<NetworkError>(NetworkError.SERVER_ERROR)
         //When
-        viewModel.state.test(timeout = 10.seconds){
+        viewModel.state.test(){
             //Then
             assertThat(awaitItem().isLoading).isFalse()
             assertThat(awaitItem().isLoading).isTrue()
