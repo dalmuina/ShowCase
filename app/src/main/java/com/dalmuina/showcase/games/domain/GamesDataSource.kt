@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.domain.usecase
+package com.dalmuina.showcase.games.domain
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -6,8 +6,8 @@ import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result
 import com.dalmuina.showcase.games.data.GameRepository
 import com.dalmuina.showcase.games.domain.model.Game
-import io.ktor.utils.io.errors.IOException
 import kotlinx.serialization.SerializationException
+import java.io.IOException
 
 class GamesDataSource(
 private val repository: GameRepository
@@ -35,7 +35,6 @@ private val repository: GameRepository
                 )
             }
             is Result.Error -> {
-                // Convert your NetworkError to appropriate exceptions
                 LoadResult.Error(
                     when (result.error) {
                         NetworkError.NO_INTERNET -> IOException("No internet")

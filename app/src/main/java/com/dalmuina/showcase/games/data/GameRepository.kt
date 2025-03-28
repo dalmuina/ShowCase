@@ -33,25 +33,6 @@ class GameRepository (private val httpClient: HttpClient) {
         }
     }
 
-//    suspend fun getAllGamesPagingFromApi(page:Int,pageSize:Int): GamesResponse{
-//        return when (val result = safeCall<GamesResponseDto> {
-//            httpClient.get(
-//                urlString = constructUrl("/games")
-//            ) {
-//                parameter("key", "37f4482fde834c2eacc917b929b0643d")
-//                parameter("page", page)
-//                parameter("page_size", pageSize)
-//            }
-//        }) {
-//            is Result.Success -> result.data.toGamesResponse()
-//            is Result.Error -> throw when (result.error) {
-//                NetworkError.SERIALIZATION -> SerializationException()
-//                // handle other errors as needed
-//                else -> RuntimeException("Failed to fetch games")
-//            }
-//        }
-//    }
-
     suspend fun getAllGamesPagingFromApi(
         page: Int,
         pageSize: Int

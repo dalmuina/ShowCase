@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.viewmodel
+package com.dalmuina.showcase.games.presentation.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -38,6 +38,7 @@ import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.navigation.Detail
 import com.dalmuina.showcase.games.presentation.state.GameListState
+import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +83,6 @@ fun SearchGamesViewScreen(
                 .fillMaxSize()
                 .padding(it)
                 .padding(horizontal = 16.dp),
-
             ) {
             SearchBar(
                 modifier = modifier.fillMaxWidth(),
@@ -91,19 +91,14 @@ fun SearchGamesViewScreen(
                         value = query,
                         onValueChange = {query = it},
                         placeholder = {Text(text = "Search")},
-                        leadingIcon = {
-                            Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-                        },
+                        leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "Search")},
                         trailingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Close",
                                 modifier = Modifier.clickable {
-                                    if (query.isNotEmpty()) {
-                                        query= ""
-                                    } else {
-                                        onAction(GameListAction.OnBackButtonClick)
-                                    }
+                                    if (query.isNotEmpty()) { query= "" }
+                                    else { onAction(GameListAction.OnBackButtonClick) }
                                 }
                             )
                         },
@@ -116,9 +111,7 @@ fun SearchGamesViewScreen(
                         modifier = modifier
                             .fillMaxWidth()
                             .onFocusChanged { focusState ->
-                                if (focusState.isFocused) {
-                                    active = true
-                                }
+                                if (focusState.isFocused) active = true
                             }
                     )
                 },
@@ -132,52 +125,66 @@ fun SearchGamesViewScreen(
                 shadowElevation = 4.dp,
                 windowInsets = WindowInsets.systemBars
             ) {
-                if (query.isNotEmpty() && query.length > 2) {
-                    val filteredGames = state.games.filter { game ->
-                        game.name.contains(query, ignoreCase = true)
-                    }
-                    if (filteredGames.isNotEmpty()) {
-                        LazyColumn {
-                            items(filteredGames) { game ->
-                                Text(
-                                    text = game.name,
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier
-                                        .padding(bottom = 10.dp, start = 10.dp)
-                                        .clickable {
-                                            onAction(GameListAction.OnLoadGameDetail(game.id))
-                                        }
-                                )
-                            }
+               SearchBarContent(query,state) {gameId->
+                   onAction(gameId)
+               }
+            }
+            CheckState(active,state) {gameId->
+                onAction(gameId)
+            }
+        }
+    }
+}
+
+@Composable
+fun CheckState(active: Boolean,state: GameListState, onAction:(GameListAction)->Unit) {
+    if (!active) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(state.games) { game ->
+                Text(
+                    text = game.name,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp, start = 10.dp)
+                        .clickable {
+                            onAction(GameListAction.OnLoadGameDetail(game.id))
                         }
-                    } else {
-                        Text(
-                            text = "No results found",
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(16.dp)
-                        )
-                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SearchBarContent( query: String,state: GameListState, onAction:(GameListAction)->Unit) {
+    if (query.isNotEmpty() && query.length > 2) {
+        val filteredGames = state.games.filter { game ->
+            game.name.contains(query, ignoreCase = true)
+        }
+        if (filteredGames.isNotEmpty()) {
+            LazyColumn {
+                items(filteredGames) { game ->
+                    Text(
+                        text = game.name,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(bottom = 10.dp, start = 10.dp)
+                            .clickable {
+                                onAction(GameListAction.OnLoadGameDetail(game.id))
+                            }
+                    )
                 }
             }
-            if (!active) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(state.games) { game ->
-                        Text(
-                            text = game.name,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .padding(bottom = 10.dp, start = 10.dp)
-                                .clickable {
-                                    onAction(GameListAction.OnLoadGameDetail(game.id))
-                                }
-                        )
-                    }
-                }
-            }
+        } else {
+            Text(
+                text = "No results found",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }

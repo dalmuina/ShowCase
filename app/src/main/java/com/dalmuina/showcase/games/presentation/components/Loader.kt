@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.component
+package com.dalmuina.showcase.games.presentation.components
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat

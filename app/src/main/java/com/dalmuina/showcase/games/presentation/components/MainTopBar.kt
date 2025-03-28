@@ -1,4 +1,4 @@
-package com.dalmuina.showcase.games.presentation.component
+package com.dalmuina.showcase.games.presentation.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.material.icons.Icons

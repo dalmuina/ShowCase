@@ -6,9 +6,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.dalmuina.showcase.games.presentation.viewmodel.DetailView
-import com.dalmuina.showcase.games.presentation.viewmodel.HomeView
-import com.dalmuina.showcase.games.presentation.viewmodel.SearchGamesView
+import com.dalmuina.showcase.games.presentation.views.DetailView
+import com.dalmuina.showcase.games.presentation.views.HomeView
+import com.dalmuina.showcase.games.presentation.views.SearchGamesView
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import org.koin.androidx.compose.koinViewModel
 
