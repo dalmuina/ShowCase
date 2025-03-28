@@ -35,6 +35,7 @@ import com.dalmuina.showcase.games.presentation.components.MainTopBar
 import com.dalmuina.showcase.games.presentation.components.MetaWebsite
 import com.dalmuina.showcase.games.presentation.components.ReviewCard
 import com.dalmuina.showcase.games.presentation.model.GameDetailUi
+import com.dalmuina.showcase.games.presentation.navigation.Home
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
@@ -67,14 +68,12 @@ fun DetailView(
                 }
                 GameListAction.OnBackButtonClick -> {
                     viewModel.onAction(action)
-                    navController.popBackStack()
+                    navController.popBackStack(Home,false)
                 }
                 else -> Unit // Handle other actions if needed
             }
         }
     )
-
-
 }
 
 @Composable
