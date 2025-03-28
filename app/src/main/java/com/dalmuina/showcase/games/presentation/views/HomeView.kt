@@ -166,22 +166,3 @@ fun SearchField(
     Spacer(modifier = Modifier.height(16.dp))
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewContentHomeView() {
-//    ShowCaseTheme {
-//        val mockGames = listOf(
-//            GameUi(id = 1, name = "GTA","https://media-rockstargames-com.akamaized.net/mfe6/prod" +
-//                    "/__common/img/71d4d17edcd49703a5ea446cc0e588e6.jpg"),
-//            GameUi(id = 1, name = "Read Dead Redemption","Image"),
-//            GameUi(id = 1, name = "Tetris","Image"),
-//        )
-//
-//        ContentHomeView(
-//            pad = PaddingValues(16.dp),
-//            games = mockGames,
-//            gamesPage =
-//            onAction = { action->}
-//        )
-//    }
-//}

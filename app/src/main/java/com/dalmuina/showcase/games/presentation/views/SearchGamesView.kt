@@ -142,7 +142,7 @@ fun CheckState(active: Boolean,state: GameListState, onAction:(GameListAction)->
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            items(state.games) { game ->
+            items(state.games, key = {it.id}) { game ->
                 Text(
                     text = game.name,
                     fontSize = 20.sp,
@@ -166,7 +166,7 @@ fun SearchBarContent( query: String,state: GameListState, onAction:(GameListActi
         }
         if (filteredGames.isNotEmpty()) {
             LazyColumn {
-                items(filteredGames) { game ->
+                items(filteredGames, key = {it.id}) { game ->
                     Text(
                         text = game.name,
                         fontSize = 20.sp,

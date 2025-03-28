@@ -12,13 +12,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.dalmuina.showcase.R
+import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 
 @Composable
 fun ErrorItem(
     message: String = "Failed to load items",
     onRetry: () -> Unit
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,11 +34,20 @@ fun ErrorItem(
     ) {
         Text(
             text = message,
-            color = MaterialTheme.colorScheme.error
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = onRetry) {
-            Text("Retry")
+            Text(context.getString(R.string.retry))
         }
+    }
+}
+
+@Preview(showBackground = true)
+@PreviewLightDark
+@Composable
+private fun ErrorItemPreview() {
+    ShowCaseTheme {
+        ErrorItem {  }
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.model.previewGameUi
@@ -30,7 +31,7 @@ fun CardGame(game: GameUi, onClick:()->Unit){
     }
 }
 
-@PreviewLightDark
+@PreviewScreenSizes
 @Composable
 private fun CardGamePreview(
 ) {
