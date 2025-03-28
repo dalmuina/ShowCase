@@ -6,13 +6,19 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
@@ -49,21 +55,26 @@ fun Loader(){
             )
         ), label = ""
     )
-
-    CircularProgressIndicator(
-        progress = { 1f },
+    Box(
         modifier = Modifier
-            .size(size = 100.dp)
-            .rotate(degrees = rotateAnimation)
-            .border(
-                width = 4.dp,
-                brush = Brush.sweepGradient(circleColors),
-                shape = CircleShape
-            ),
-        color = MaterialTheme.colorScheme.background,
-        strokeWidth = 1.dp,
-        trackColor = ProgressIndicatorDefaults.circularIndeterminateTrackColor,
-    )
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center,
+        ){
+        CircularProgressIndicator(
+            progress = { 1f },
+            modifier = Modifier
+                .size(size = 100.dp)
+                .rotate(degrees = rotateAnimation)
+                .border(
+                    width = 4.dp,
+                    brush = Brush.sweepGradient(circleColors),
+                    shape = CircleShape
+                ),
+            color = MaterialTheme.colorScheme.background,
+            strokeWidth = 1.dp,
+            trackColor = ProgressIndicatorDefaults.circularIndeterminateTrackColor,
+        )
+    }
 }
 
 @PreviewLightDark
