@@ -10,7 +10,7 @@ import com.dalmuina.core.domain.util.onError
 import com.dalmuina.core.domain.util.onSuccess
 import com.dalmuina.core.presentation.util.NetworkErrorEvent
 import com.dalmuina.showcase.games.data.GameRepository
-import com.dalmuina.showcase.games.domain.GamesDataSource
+import com.dalmuina.showcase.games.data.GamesDataSource
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByNameUseCase

@@ -105,5 +105,7 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation (libs.koin.test)
     testImplementation(libs.androidx.core.testing)
+
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.0")
 }
 
