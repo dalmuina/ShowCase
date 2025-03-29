@@ -1,4 +1,4 @@
-package com.dalmuina.core.data.network
+package com.dalmuina.showcase.games.data.network.ktor
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine

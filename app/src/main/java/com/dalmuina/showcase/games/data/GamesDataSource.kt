@@ -1,10 +1,9 @@
-package com.dalmuina.showcase.games.domain
+package com.dalmuina.showcase.games.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result
-import com.dalmuina.showcase.games.data.GameRepository
 import com.dalmuina.showcase.games.domain.model.Game
 import kotlinx.serialization.SerializationException
 import java.io.IOException

@@ -1,4 +1,4 @@
-package com.dalmuina.core.data.network
+package com.dalmuina.showcase.games.data.network.ktor
 
 import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result

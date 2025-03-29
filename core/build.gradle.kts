@@ -42,12 +42,6 @@ android {
 
 dependencies {
 
-    //Ktor
-    implementation(libs.bundles.ktor)
-
-    //Koin
-    implementation(libs.bundles.koin)
-
     //Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
