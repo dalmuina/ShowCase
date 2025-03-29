@@ -10,7 +10,8 @@ val repositoryModule = module {
     singleOf(::GameRepository)
     single<ApiClient> {
         KtorApiClient(
-            httpClient = get()
+            httpClient = get(),
+            apiKey = "37f4482fde834c2eacc917b929b0643d"
         )
     }
 }

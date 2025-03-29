@@ -17,13 +17,16 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
-class KtorApiClient(private val httpClient: HttpClient): ApiClient {
+class KtorApiClient(
+    private val httpClient: HttpClient,
+    private val apiKey: String): ApiClient
+{
     override suspend fun getAllGamesFromApi(): Result<List<Game>, NetworkError> {
         return safeCall<GamesResponseDto> {
             httpClient.get(
                 urlString = constructUrl("/games")
             ) {
-                parameter("key", "37f4482fde834c2eacc917b929b0643d")
+                parameter("key", apiKey)
             }
         }.map { response ->
             response.results.map {
@@ -40,7 +43,7 @@ class KtorApiClient(private val httpClient: HttpClient): ApiClient {
             httpClient.get(
                 urlString = constructUrl("/games")
             ) {
-                parameter("key", "37f4482fde834c2eacc917b929b0643d")
+                parameter("key", apiKey)
                 parameter("page", page)
                 parameter("page_size", pageSize)
             }
@@ -54,7 +57,7 @@ class KtorApiClient(private val httpClient: HttpClient): ApiClient {
             httpClient.get(
                 urlString = constructUrl("/games/$id")
             ){
-                parameter("key", "37f4482fde834c2eacc917b929b0643d")
+                parameter("key", apiKey)
             }
         }.map { response ->
             response.toGameDetail()
@@ -67,7 +70,7 @@ class KtorApiClient(private val httpClient: HttpClient): ApiClient {
                 httpClient.get(
                     urlString = constructUrl("/games/$name")
                 ){
-                    parameter("key", "37f4482fde834c2eacc917b929b0643d")
+                    parameter("key", apiKey)
                 }
             }.map { response ->
                 response.toGameDetail()
