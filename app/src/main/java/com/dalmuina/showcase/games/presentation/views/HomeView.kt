@@ -33,9 +33,9 @@ import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.components.CardGame
 import com.dalmuina.showcase.games.presentation.components.ErrorItem
-import com.dalmuina.showcase.games.presentation.components.FullScreenLoading
 import com.dalmuina.showcase.games.presentation.components.Loader
 import com.dalmuina.showcase.games.presentation.components.MainTopBar
+import com.dalmuina.showcase.games.presentation.components.ShimmerListItem
 import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.navigation.Detail
 import com.dalmuina.showcase.games.presentation.navigation.SearchGameView
@@ -49,7 +49,6 @@ fun HomeView(
     modifier: Modifier = Modifier,
 ){
     ObserveEvents(viewModel.events)
-
     val gamesPagingItems = viewModel.gamesPagingFlow.collectAsLazyPagingItems()
     HomeViewScreen(
         gamesPagingItems = gamesPagingItems,
@@ -70,9 +69,10 @@ fun HomeView(
 }
 
 @Composable
-fun HomeViewScreen(gamesPagingItems: LazyPagingItems<GameUi>,
-                   modifier: Modifier,
-                   onAction:(GameListAction)->Unit
+fun HomeViewScreen(
+    gamesPagingItems: LazyPagingItems<GameUi>,
+    modifier: Modifier,
+    onAction:(GameListAction)->Unit
 ){
     var search by remember { mutableStateOf("") }
     Scaffold(
@@ -108,6 +108,7 @@ fun GameListContent(
     gamesPagingItems: LazyPagingItems<GameUi>,
     onItemClick: (GameUi) -> Unit
 ) {
+    val isLoading = gamesPagingItems.loadState.refresh is LoadState.Loading
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -115,14 +116,33 @@ fun GameListContent(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        items(gamesPagingItems.itemCount) { index ->
-            gamesPagingItems[index]?.let { game ->
-                CardGame(game, onClick = { onItemClick(game) })
-                Text(
-                    text = game.name,
-                    fontWeight = FontWeight.ExtraBold,
-                    color = Color.White,
-                    modifier = Modifier.padding(start = 10.dp)
+        if (isLoading && gamesPagingItems.itemCount == 0) {
+            items(5) {  // Show 10 shimmer placeholders
+                ShimmerListItem(
+                    isLoading = true,
+                    contentAfterLoading = { },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        } else {
+            items(gamesPagingItems.itemCount) { index ->
+                val game = gamesPagingItems[index]
+                ShimmerListItem(
+                    isLoading = game == null,
+                    contentAfterLoading = {
+                        if (game != null) {
+                            CardGame(game, onClick = { onItemClick(game) })
+                            Text(
+                                text = game.name,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.White,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 )
             }
         }
@@ -130,9 +150,6 @@ fun GameListContent(
         // Handle loading and error states
         gamesPagingItems.apply {
             when {
-                loadState.refresh is LoadState.Loading -> {
-                    item { FullScreenLoading() }
-                }
                 loadState.append is LoadState.Loading -> {
                     item { Loader() }
                 }
