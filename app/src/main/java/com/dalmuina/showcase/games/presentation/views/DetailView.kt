@@ -43,12 +43,12 @@ import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailView(
-    navController: NavController,
+fun DetailViewWrapper(
     viewModel: GamesViewModel,
     id: Int,
     name : String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickBack:()->Unit
 ) {
     ObserveEvents(viewModel.events)
     val detail by viewModel.detail.collectAsStateWithLifecycle()
@@ -68,7 +68,7 @@ fun DetailView(
                 }
                 GameListAction.OnBackButtonClick -> {
                     viewModel.onAction(action)
-                    navController.popBackStack(Home,false)
+                    onClickBack
                 }
                 else -> Unit // Handle other actions if needed
             }

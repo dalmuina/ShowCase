@@ -43,10 +43,11 @@ import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
 @Composable
-fun HomeView(
-    navController: NavController,
+fun HomeViewWrapper(
     viewModel: GamesViewModel,
     modifier: Modifier = Modifier,
+    onClickDetail:(Detail)->Unit,
+    onClickSearch:(SearchGameView)->Unit
 ){
     ObserveEvents(viewModel.events)
     val gamesPagingItems = viewModel.gamesPagingFlow.collectAsLazyPagingItems()
@@ -55,12 +56,12 @@ fun HomeView(
         modifier = modifier,
         onAction = { action ->
             when(action) {
-                is GameListAction.NavigateToGame -> navController.navigate(SearchGameView)
+                is GameListAction.NavigateToGame -> onClickSearch(SearchGameView)
                 is GameListAction.OnLoadGameDetail -> {
-                    navController.navigate(Detail(action.id, null))
+                    onClickDetail(Detail(action.id, null))
                 }
                 is GameListAction.OnLoadGameDetailSearched -> {
-                    navController.navigate(Detail(0,action.search))
+                    onClickDetail(Detail(0,action.search))
                 }
                 else -> viewModel.onAction(action)
             }

@@ -42,10 +42,11 @@ import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchGamesView(
-    navController: NavController,
+fun SearchGamesViewWrapper(
     viewModel: GamesViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickDetail:(Detail)->Unit,
+    onClickBack:()->Unit
 ) {
 
     ObserveEvents(viewModel.events)
@@ -56,10 +57,10 @@ fun SearchGamesView(
         onAction = {action ->
             when(action) {
                 is GameListAction.OnLoadGameDetail -> {
-                    navController.navigate(Detail(action.id,null))
+                    onClickDetail(Detail(action.id,null))
                 }
                 GameListAction.OnBackButtonClick -> {
-                    navController.popBackStack()
+                    onClickBack
                 }
                 else -> viewModel.onAction(action)
             }
