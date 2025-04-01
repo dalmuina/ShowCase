@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.1"
+dotenvKotlin = "6.5.1"
 koinTest = "3.5.0"
 #noinspection GradleDependency
 kotlin = "2.0.0"
@@ -32,6 +33,7 @@ kotlinxSerialization = "1.6.3"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenvKotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
