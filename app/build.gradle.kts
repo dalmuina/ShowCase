@@ -91,6 +91,9 @@ dependencies {
     //Paging
     implementation(libs.bundles.paging)
 
+    //Dotenv
+    implementation(libs.dotenv.kotlin)
+
     //Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -106,6 +109,5 @@ dependencies {
     testImplementation (libs.koin.test)
     testImplementation(libs.androidx.core.testing)
 
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.0")
 }
 
