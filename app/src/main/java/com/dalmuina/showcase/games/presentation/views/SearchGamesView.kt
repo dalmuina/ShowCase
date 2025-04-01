@@ -33,7 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.navigation.Detail
