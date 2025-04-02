@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.components.MainImage
@@ -35,7 +34,6 @@ import com.dalmuina.showcase.games.presentation.components.MainTopBar
 import com.dalmuina.showcase.games.presentation.components.MetaWebsite
 import com.dalmuina.showcase.games.presentation.components.ReviewCard
 import com.dalmuina.showcase.games.presentation.model.GameDetailUi
-import com.dalmuina.showcase.games.presentation.navigation.Home
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
@@ -43,12 +41,12 @@ import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailView(
-    navController: NavController,
+fun DetailViewWrapper(
     viewModel: GamesViewModel,
     id: Int,
     name : String?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickBack:()->Unit
 ) {
     ObserveEvents(viewModel.events)
     val detail by viewModel.detail.collectAsStateWithLifecycle()
@@ -68,7 +66,7 @@ fun DetailView(
                 }
                 GameListAction.OnBackButtonClick -> {
                     viewModel.onAction(action)
-                    navController.popBackStack(Home,false)
+                    onClickBack
                 }
                 else -> Unit // Handle other actions if needed
             }
