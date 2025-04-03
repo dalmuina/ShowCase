@@ -19,7 +19,8 @@ import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTopBar(title: String, showBackButton: Boolean = false, onClickBackButton: () -> Unit, onAction:()->Unit){
+fun MainTopBar(
+    title: String, showBackButton: Boolean = false, onClickBackButton: () -> Unit, onAction:()->Unit){
     TopAppBar(
         title = { Text(text = title, color = Color.White, fontWeight = FontWeight.ExtraBold) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -27,7 +28,8 @@ fun MainTopBar(title: String, showBackButton: Boolean = false, onClickBackButton
         navigationIcon = {
             if(showBackButton){
                 IconButton(onClick={onClickBackButton()}) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "",tint = Color.White)
+                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "",tint = Color.White)
                 }
             }
         },

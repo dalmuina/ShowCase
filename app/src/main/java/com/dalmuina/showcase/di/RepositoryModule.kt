@@ -8,15 +8,10 @@ import org.koin.dsl.module
 import io.github.cdimascio.dotenv.dotenv
 
 val repositoryModule = module {
-    val dotenv = dotenv {
-        directory = "/assets"
-        filename = "env" // instead of '.env', use 'env'
-    }
+
     singleOf(::GameRepository)
     single<ApiClient> {
         KtorApiClient(
-            httpClient = get(),
-            apiKey = dotenv["API_KEY"]
-        )
+            httpClient = get())
     }
 }
