@@ -26,7 +26,7 @@ class KtorApiClientTest {
     @Before
     fun onBefore() {
         MockKAnnotations.init(this)
-        ktorApiClient = KtorApiClient(httpClient, "37f4482fde834c2eacc917b929b0643d")
+        ktorApiClient = KtorApiClient(httpClient)
     }
 
     @Test
