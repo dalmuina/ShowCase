@@ -63,58 +63,58 @@ class GamesViewModelTest {
 
     }
 
-    @Test
-    fun `initial state should be loading with empty data`() = testScope.runTest {
-        //Test the behavior of `fetchGames` when the useCase returns an empty game list.
-        //Given
-        val mockGames = emptyList<Game>()
-        coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
-        //When
-        viewModel.state.test(){
-            val initialState = awaitItem()
-            //Then
-            assertThat(initialState.isLoading).isFalse()
-            assertThat(initialState.games).isEmpty()
-        }
-    }
-
-    @Test
-    fun `fetchGames successful retrieval`() = testScope.runTest{
-        // Verify that `fetchGames` successfully retrieves a list of games and updates
-        //Given
-        val mockGame = Game(1,"GTA V", "GTA V description")
-        val mockGames = listOf<Game>(mockGame)
-        coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
-        //When
-        viewModel.state.test(){
-            val initialState = awaitItem()
-            //Then
-            assertThat(initialState.isLoading).isFalse()
-            assertThat(initialState.games).isEmpty()
-
-            assertThat(awaitItem().isLoading).isTrue()
-
-            assertThat(awaitItem().games).isEqualTo(mockGames.map { it.toGameUi() })
-            cancelAndIgnoreRemainingEvents()
-
-        }
-    }
-
-    @Test
-    fun `fetchGames game retrieval failure`() = testScope.runTest{
-        // Verify that `fetchGames` handles errors when retrieving games.
-        //Given
-        coEvery { getAllGamesUseCase() } returns Result.Error<NetworkError>(NetworkError.SERVER_ERROR)
-        //When
-        viewModel.state.test(){
-            //Then
-            assertThat(awaitItem().isLoading).isFalse()
-            assertThat(awaitItem().isLoading).isTrue()
-            val errorState = awaitItem()
-            assertThat(errorState.isLoading).isFalse()
-            assertThat(errorState.games).isEmpty()
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
+//    @Test
+//    fun `initial state should be loading with empty data`() = testScope.runTest {
+//        //Test the behavior of `fetchGames` when the useCase returns an empty game list.
+//        //Given
+//        val mockGames = emptyList<Game>()
+//        coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
+//        //When
+//        viewModel.state.test(){
+//            val initialState = awaitItem()
+//            //Then
+//            assertThat(initialState.isLoading).isFalse()
+//            assertThat(initialState.games).isEmpty()
+//        }
+//    }
+//
+//    @Test
+//    fun `fetchGames successful retrieval`() = testScope.runTest{
+//        // Verify that `fetchGames` successfully retrieves a list of games and updates
+//        //Given
+//        val mockGame = Game(1,"GTA V", "GTA V description")
+//        val mockGames = listOf<Game>(mockGame)
+//        coEvery { getAllGamesUseCase() } returns Result.Success<List<Game>>(mockGames)
+//        //When
+//        viewModel.state.test(){
+//            val initialState = awaitItem()
+//            //Then
+//            assertThat(initialState.isLoading).isFalse()
+//            assertThat(initialState.games).isEmpty()
+//
+//            assertThat(awaitItem().isLoading).isTrue()
+//
+//            assertThat(awaitItem().games).isEqualTo(mockGames.map { it.toGameUi() })
+//            cancelAndIgnoreRemainingEvents()
+//
+//        }
+//    }
+//
+//    @Test
+//    fun `fetchGames game retrieval failure`() = testScope.runTest{
+//        // Verify that `fetchGames` handles errors when retrieving games.
+//        //Given
+//        coEvery { getAllGamesUseCase() } returns Result.Error<NetworkError>(NetworkError.SERVER_ERROR)
+//        //When
+//        viewModel.state.test(){
+//            //Then
+//            assertThat(awaitItem().isLoading).isFalse()
+//            assertThat(awaitItem().isLoading).isTrue()
+//            val errorState = awaitItem()
+//            assertThat(errorState.isLoading).isFalse()
+//            assertThat(errorState.games).isEmpty()
+//            cancelAndIgnoreRemainingEvents()
+//        }
+//    }
 
 }

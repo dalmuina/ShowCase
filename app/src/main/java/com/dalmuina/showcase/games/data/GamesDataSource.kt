@@ -9,7 +9,8 @@ import kotlinx.serialization.SerializationException
 import java.io.IOException
 
 class GamesDataSource(
-private val repository: GameRepositoryImpl
+private val repository: GameRepositoryImpl,
+private val filter: String = ""
 ) : PagingSource<Int, Game>() {
 
     override fun getRefreshKey(state: PagingState<Int, Game>): Int? {
@@ -25,8 +26,12 @@ private val repository: GameRepositoryImpl
             pageSize = params.loadSize
         )) {
             is Result.Success -> {
+                val filteredResults = result.data.results.filter {
+                    it.name.contains(filter, ignoreCase = true)
+                }
+
                 LoadResult.Page(
-                    data = result.data.results,
+                    data = filteredResults,
                     prevKey = null, // Only forward paging
                     nextKey = if (result.data.results.isNotEmpty()) {
                         (params.key ?: 1) + 1
