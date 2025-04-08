@@ -8,5 +8,3 @@ object Home
 @Serializable
 data class Detail(val id:Int, val name:String?)
 
-@Serializable
-object SearchGameView

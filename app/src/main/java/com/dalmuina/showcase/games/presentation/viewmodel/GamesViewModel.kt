@@ -21,10 +21,15 @@ import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.state.GameListState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -33,6 +38,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class GamesViewModel (
     private val repository: GameRepositoryImpl,
     private val getAllGamesUseCase: GetAllGamesUseCase,
@@ -40,32 +46,27 @@ class GamesViewModel (
     private val getGameByNameUseCase: GetGameByNameUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
-    //This project has 2 different ways to fetch information
-    //for academic reasons
-    //Fetch games for the SearchViewPage, Pager for the HomeView
-    private val _state = MutableStateFlow(GameListState())
-    val state = _state
-        .onStart {
-            fetchGames()
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
-            GameListState()
-        )
 
-    val gamesPagingFlow = Pager(
-        PagingConfig(
-            pageSize = 10,
-            enablePlaceholders = false
-        )
-    ) {
-        GamesDataSource(repository)
-    }.flow
-        .map { pagingData ->
+    private val _filter = MutableStateFlow("")
+    val filter = _filter.asStateFlow()
+
+    private val debouncedFilter = _filter
+        .debounce(300)
+        .distinctUntilChanged()
+
+    val gamesPagingFlow = debouncedFilter
+        .flatMapLatest { filterValue ->
+            Pager(
+                PagingConfig(
+                    pageSize = 20,
+                    enablePlaceholders = false
+                )
+            ) {
+                GamesDataSource(repository, filterValue)
+            }.flow
+        }.map { pagingData ->
             pagingData.map { it.toGameUi() }
-        }
-        .flowOn(dispatcher)
-        .cachedIn(viewModelScope)
+        }.cachedIn(viewModelScope)
 
     private val _events  = Channel<NetworkErrorEvent>()
     val events = _events.receiveAsFlow()
@@ -78,38 +79,14 @@ class GamesViewModel (
             GameListAction.OnBackButtonClick -> {
                 clean()
             }
-            is GameListAction.OnGameClick -> Unit
+            is GameListAction.OnFilterChange -> {
+                if (_filter.value != action.filter) {
+                    _filter.update { action.filter }
+                }
+            }
             is GameListAction.OnLoadGameDetail -> {
                 loadGameDetail(action.id)
             }
-            is GameListAction.OnLoadGameDetailSearched -> {
-                loadGameDetailSearched(action.search)
-            }
-            is GameListAction.NavigateToGame -> Unit
-        }
-    }
-
-    private fun fetchGames(){
-        viewModelScope.launch(dispatcher) {
-            _state.update { it.copy(
-                isLoading = true
-            )}
-
-            getAllGamesUseCase()
-                .onSuccess { games ->
-                    _state.update { it.copy(
-                        isLoading = false,
-                        games = games.map{
-                            it.toGameUi()
-                        }
-                    )}
-                }.onError {error ->
-                    _state.update { it.copy(
-                        isLoading = false
-                    )}
-                    _events.send(NetworkErrorEvent.Error(error))
-                }
-
         }
     }
 

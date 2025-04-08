@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -37,7 +38,6 @@ import com.dalmuina.showcase.games.presentation.components.MainTopBar
 import com.dalmuina.showcase.games.presentation.components.ShimmerListItem
 import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.navigation.Detail
-import com.dalmuina.showcase.games.presentation.navigation.SearchGameView
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
 
@@ -45,22 +45,19 @@ import com.dalmuina.showcase.ui.theme.primaryContainerDark
 fun HomeViewWrapper(
     viewModel: GamesViewModel,
     modifier: Modifier = Modifier,
-    onClickDetail:(Detail)->Unit,
-    onClickSearch:(SearchGameView)->Unit
+    onClickDetail:(Detail)->Unit
 ){
     ObserveEvents(viewModel.events)
+    val filter = viewModel.filter.collectAsStateWithLifecycle()
     val gamesPagingItems = viewModel.gamesPagingFlow.collectAsLazyPagingItems()
     HomeViewScreen(
         gamesPagingItems = gamesPagingItems,
+        filter = filter.value,
         modifier = modifier,
         onAction = { action ->
             when(action) {
-                is GameListAction.NavigateToGame -> onClickSearch(SearchGameView)
                 is GameListAction.OnLoadGameDetail -> {
                     onClickDetail(Detail(action.id, null))
-                }
-                is GameListAction.OnLoadGameDetailSearched -> {
-                    onClickDetail(Detail(0,action.search))
                 }
                 else -> viewModel.onAction(action)
             }
@@ -71,6 +68,7 @@ fun HomeViewWrapper(
 @Composable
 fun HomeViewScreen(
     gamesPagingItems: LazyPagingItems<GameUi>,
+    filter: String,
     modifier: Modifier,
     onAction:(GameListAction)->Unit
 ){
@@ -81,7 +79,6 @@ fun HomeViewScreen(
             MainTopBar(
                 title = "API GAMES",
                 onClickBackButton = {}){
-                onAction(GameListAction.NavigateToGame("SearchGameView"))
             }
         }
     ) {padding->
@@ -90,9 +87,12 @@ fun HomeViewScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            SearchField(search, onSearchChange = { search = it }, onSearch = {
-                onAction(GameListAction.OnLoadGameDetailSearched(search))
-            })
+            FilterField(
+                value = filter,
+                onFilterChange = {
+                    onAction(GameListAction.OnFilterChange(it))
+                },
+                onFilter = {})
 
             GameListContent(
                 gamesPagingItems = gamesPagingItems,
@@ -165,21 +165,20 @@ fun GameListContent(
 }
 
 @Composable
-fun SearchField(
+fun FilterField(
     value: String,
-    onSearchChange: (String) -> Unit,
-    onSearch: () -> Unit
+    onFilterChange: (String) -> Unit,
+    onFilter: () -> Unit
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = onSearchChange,
-        label = { Text("Search") },
+        onValueChange = onFilterChange,
+        label = { Text("Filter") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = { onSearch() }),
+        keyboardActions = KeyboardActions(onDone = { onFilter() }),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp, 0.dp)
     )
     Spacer(modifier = Modifier.height(16.dp))
 }
-

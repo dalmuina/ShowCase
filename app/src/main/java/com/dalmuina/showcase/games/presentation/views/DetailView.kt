@@ -44,7 +44,6 @@ import com.dalmuina.showcase.ui.theme.primaryContainerDark
 fun DetailViewWrapper(
     viewModel: GamesViewModel,
     id: Int,
-    name : String?,
     modifier: Modifier = Modifier,
     onClickBack:()->Unit
 ) {
@@ -55,20 +54,16 @@ fun DetailViewWrapper(
         detail = detail,
         modifier = modifier,
         id = id,
-        name = name,
         onAction = { action ->
             when (action) {
                 is GameListAction.OnLoadGameDetail -> {
-                    viewModel.onAction(action)
-                }
-                is GameListAction.OnLoadGameDetailSearched -> {
                     viewModel.onAction(action)
                 }
                 GameListAction.OnBackButtonClick -> {
                     viewModel.onAction(action)
                     onClickBack
                 }
-                else -> Unit // Handle other actions if needed
+                else -> Unit
             }
         }
     )
@@ -78,15 +73,10 @@ fun DetailViewWrapper(
 fun DetailViewScreen(detail: GameDetailState,
                      modifier: Modifier,
                      id: Int,
-                     name: String?,
                      onAction:(GameListAction)->Unit
 ){
     LaunchedEffect(Unit) {
-        if (id==0){
-            name?.let{
-                onAction(GameListAction.OnLoadGameDetailSearched(it.replace(" ","-")))
-            }
-        } else onAction(GameListAction.OnLoadGameDetail(id))
+        onAction(GameListAction.OnLoadGameDetail(id))
     }
 
     if (detail.isLoading) {
