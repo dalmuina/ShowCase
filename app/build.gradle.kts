@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.bundles.compose)
     debugImplementation(libs.bundles.compose.debug)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+    implementation (libs.material)
+
 
     //Corrutinas
     implementation (libs.kotlinx.coroutines.android)
@@ -93,6 +95,9 @@ dependencies {
 
     //Dotenv
     implementation(libs.dotenv.kotlin)
+
+    //SplashScreen
+    implementation(libs.androidx.core.splashscreen)
 
     //Test
     testImplementation(libs.junit)

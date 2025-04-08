@@ -25,6 +25,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -63,6 +64,7 @@ class GamesViewModel (
         .map { pagingData ->
             pagingData.map { it.toGameUi() }
         }
+        .flowOn(dispatcher)
         .cachedIn(viewModelScope)
 
     private val _events  = Channel<NetworkErrorEvent>()
