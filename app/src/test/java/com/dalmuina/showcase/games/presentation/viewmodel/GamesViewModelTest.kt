@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result
-import com.dalmuina.showcase.games.data.GameRepository
+import com.dalmuina.showcase.games.data.GameRepositoryImpl
 import com.dalmuina.showcase.games.domain.model.Game
 import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
 import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
@@ -22,7 +22,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GamesViewModelTest {
@@ -34,7 +33,7 @@ class GamesViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @RelaxedMockK
-    private lateinit var repository: GameRepository
+    private lateinit var repository: GameRepositoryImpl
 
     @RelaxedMockK
     private lateinit var getAllGamesUseCase: GetAllGamesUseCase

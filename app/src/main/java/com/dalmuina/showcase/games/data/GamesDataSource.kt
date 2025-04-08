@@ -9,7 +9,7 @@ import kotlinx.serialization.SerializationException
 import java.io.IOException
 
 class GamesDataSource(
-private val repository: GameRepository
+private val repository: GameRepositoryImpl
 ) : PagingSource<Int, Game>() {
 
     override fun getRefreshKey(state: PagingState<Int, Game>): Int? {

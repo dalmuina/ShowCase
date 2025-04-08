@@ -5,10 +5,11 @@ import com.dalmuina.core.domain.util.Result
 import com.dalmuina.showcase.games.domain.model.Game
 import com.dalmuina.showcase.games.domain.model.GameDetail
 import com.dalmuina.showcase.games.domain.model.GamesResponse
+import com.dalmuina.showcase.games.domain.usecase.GameRepository
 
-class GameRepository (private val apiClient: ApiClient) {
+class GameRepositoryImpl (private val apiClient: ApiClient): GameRepository {
 
-    suspend fun getAllGamesFromApi(): Result<List<Game>, NetworkError>{
+    override suspend fun getAllGamesFromApi(): Result<List<Game>, NetworkError>{
         return apiClient.getAllGamesFromApi()
     }
 
@@ -19,11 +20,11 @@ class GameRepository (private val apiClient: ApiClient) {
         return apiClient.getAllGamesPagingFromApi(page,pageSize)
     }
 
-   suspend fun getGameById(id: Int): Result<GameDetail, NetworkError> {
+   override suspend fun getGameById(id: Int): Result<GameDetail, NetworkError> {
        return apiClient.getGameById(id)
     }
 
-    suspend fun getGameByName(name: String?): Result<GameDetail, NetworkError> {
+    override suspend fun getGameByName(name: String?): Result<GameDetail, NetworkError> {
 
         return apiClient.getGameByName(name)
     }
