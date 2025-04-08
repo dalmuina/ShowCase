@@ -10,4 +10,5 @@
     <color name="Loader8">#ff44a084</color>
     <color name="Loader9">#ff69b39c</color>
     <color name="Loader10">#ff8ec6b5</color>
+    <color name="SplashBackground">#ff8e9fc6</color>
 </resources>

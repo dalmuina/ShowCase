@@ -1,12 +1,12 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
+    android:width="800dp"
+    android:height="600dp"
     android:viewportWidth="800"
     android:viewportHeight="600">
-  <group android:scaleX="0.4"
-      android:scaleY="0.3"
-      android:translateX="240"
-      android:translateY="210">
+  <group
+      android:name="animationGroup"
+      android:pivotX="400"
+      android:pivotY="300">
     <path
         android:fillColor="#FF000000"
         android:strokeWidth="1"
