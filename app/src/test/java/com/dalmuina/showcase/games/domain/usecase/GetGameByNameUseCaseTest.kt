@@ -2,7 +2,7 @@ package com.dalmuina.showcase.games.domain.usecase
 
 import com.dalmuina.core.domain.util.NetworkError
 import com.dalmuina.core.domain.util.Result
-import com.dalmuina.showcase.games.data.GameRepository
+import com.dalmuina.showcase.games.data.GameRepositoryImpl
 import com.dalmuina.showcase.games.domain.model.GameDetail
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -14,7 +14,7 @@ import org.junit.Test
 class GetGameByNameUseCaseTest {
 
     @RelaxedMockK
-    private lateinit var repository:  GameRepository
+    private lateinit var repository:  GameRepositoryImpl
 
     private lateinit var getGameByNameUseCase: GetGameByNameUseCase
 
