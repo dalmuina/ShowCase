@@ -1,7 +1,7 @@
 package com.dalmuina.showcase.games.presentation.model
 
 import androidx.compose.runtime.Immutable
-import com.dalmuina.showcase.games.domain.model.Game
+import com.dalmuina.model.Game
 
 @Immutable
 data class GameUi(

@@ -1,6 +1,8 @@
 package com.dalmuina.showcase
 
 import android.app.Application
+import com.dalmuina.data.di.dataModule
+import com.dalmuina.network.di.networkModule
 import com.dalmuina.showcase.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,7 +16,7 @@ class ShowCaseApp: Application() {
             androidContext(this@ShowCaseApp)
             androidLogger()
 
-            modules(appModule)
+            modules(appModule, networkModule, dataModule)
         }
     }
 }

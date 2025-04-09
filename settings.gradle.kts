@@ -21,4 +21,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "ShowCase"
 include(":app")
-include(":core")
+include(":core:domain")
+include(":core:data")
+include(":core:network")
+include(":core:utils")
+include(":core:model")
+include(":core:api-client")

@@ -6,44 +6,35 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.dalmuina.core.domain.util.onError
-import com.dalmuina.core.domain.util.onSuccess
-import com.dalmuina.core.presentation.util.NetworkErrorEvent
-import com.dalmuina.showcase.games.data.GameRepositoryImpl
-import com.dalmuina.showcase.games.data.GamesDataSource
-import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
-import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
-import com.dalmuina.showcase.games.domain.usecase.GetGameByNameUseCase
+import com.dalmuina.data.repository.GameRepositoryImpl
+import com.dalmuina.data.repository.GamesDataSource
+import com.dalmuina.domain.GetGameByIdUseCase
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.model.toGameDetailUi
 import com.dalmuina.showcase.games.presentation.model.toGameUi
 import com.dalmuina.showcase.games.presentation.state.GameDetailState
-import com.dalmuina.showcase.games.presentation.state.GameListState
+import com.dalmuina.utils.NetworkErrorEvent
+import com.dalmuina.utils.onError
+import com.dalmuina.utils.onSuccess
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class GamesViewModel (
     private val repository: GameRepositoryImpl,
-    private val getAllGamesUseCase: GetAllGamesUseCase,
     private val getGameByIdUseCase: GetGameByIdUseCase,
-    private val getGameByNameUseCase: GetGameByNameUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -90,33 +81,12 @@ class GamesViewModel (
         }
     }
 
-    fun loadGameDetail(id : Int){
+    private fun loadGameDetail(id : Int){
         viewModelScope.launch(dispatcher) {
             _detail.update { it.copy(
                 isLoading = true
             )}
             getGameByIdUseCase(id)
-                .onSuccess { game->
-                    _detail.update {it.copy(
-                        isLoading = false,
-                        gameDetailUi = game.toGameDetailUi(),
-                    )}
-                }.onError {error ->
-                    _detail.update { it.copy(
-                        isLoading = false
-                    )}
-                    _events.send(NetworkErrorEvent.Error(error))
-                }
-
-        }
-    }
-
-    fun loadGameDetailSearched(search : String){
-        viewModelScope.launch(dispatcher) {
-            _detail.update { it.copy(
-                isLoading = true
-            )}
-            getGameByNameUseCase(search)
                 .onSuccess { game->
                     _detail.update {it.copy(
                         isLoading = false,
