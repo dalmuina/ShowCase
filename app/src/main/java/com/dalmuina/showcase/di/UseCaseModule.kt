@@ -1,8 +1,9 @@
 package com.dalmuina.showcase.di
 
-import com.dalmuina.showcase.games.domain.usecase.GetAllGamesUseCase
-import com.dalmuina.showcase.games.domain.usecase.GetGameByIdUseCase
-import com.dalmuina.showcase.games.domain.usecase.GetGameByNameUseCase
+
+import com.dalmuina.domain.GetAllGamesUseCase
+import com.dalmuina.domain.GetGameByIdUseCase
+import com.dalmuina.domain.GetGameByNameUseCase
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 

@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.components.MainImage
 import com.dalmuina.showcase.games.presentation.components.MainTopBar
@@ -38,6 +37,7 @@ import com.dalmuina.showcase.games.presentation.state.GameDetailState
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.ShowCaseTheme
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
+import com.dalmuina.utils.ObserveEvents
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

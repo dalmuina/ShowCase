@@ -3,9 +3,16 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="ShowCase.app.core" target="21" />
+      <module name="ShowCase.core.data.test" target="11" />
+      <module name="ShowCase.core.domain.test" target="11" />
+      <module name="ShowCase.core.util" target="21" />
       <module name="ShowCase.di" target="11" />
       <module name="ShowCase.di.main" target="11" />
       <module name="ShowCase.di.test" target="11" />
+      <module name="ShowCase.test" target="11" />
+      <module name="ShowCase.test.main" target="11" />
+      <module name="ShowCase.test.test" target="11" />
+      <module name="ShowCase.util" target="21" />
     </bytecodeTargetLevel>
   </component>
 </project>

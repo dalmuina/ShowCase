@@ -29,7 +29,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.dalmuina.core.presentation.util.ObserveEvents
 import com.dalmuina.showcase.games.presentation.GameListAction
 import com.dalmuina.showcase.games.presentation.components.CardGame
 import com.dalmuina.showcase.games.presentation.components.ErrorItem
@@ -40,6 +39,7 @@ import com.dalmuina.showcase.games.presentation.model.GameUi
 import com.dalmuina.showcase.games.presentation.navigation.Detail
 import com.dalmuina.showcase.games.presentation.viewmodel.GamesViewModel
 import com.dalmuina.showcase.ui.theme.primaryContainerDark
+import com.dalmuina.utils.ObserveEvents
 
 @Composable
 fun HomeViewWrapper(
@@ -72,7 +72,6 @@ fun HomeViewScreen(
     modifier: Modifier,
     onAction:(GameListAction)->Unit
 ){
-    var search by remember { mutableStateOf("") }
     Scaffold(
         modifier = modifier,
         topBar = {
