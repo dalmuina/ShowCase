@@ -77,6 +77,7 @@ serialization-json = {group="org.jetbrains.kotlinx",name="kotlinx-serialization-
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

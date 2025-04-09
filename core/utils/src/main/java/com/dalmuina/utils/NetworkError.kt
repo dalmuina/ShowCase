@@ -1,6 +1,5 @@
 package com.dalmuina.utils
 
-
 enum class NetworkError: Error {
     REQUEST_TIMEOUT,
     TOO_MANY_REQUESTS,

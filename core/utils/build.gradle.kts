@@ -36,6 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
+        }
+    }
 }
 
 dependencies {
@@ -50,5 +55,10 @@ dependencies {
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.mockk)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.truth)
+    testImplementation(libs.truth)
+    testImplementation(libs.androidx.core.testing)
 }
