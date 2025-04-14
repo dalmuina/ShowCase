@@ -1,5 +1,6 @@
 package com.dalmuina.domain
 
+import com.dalmuina.domain.repository.GameRepository
 import com.dalmuina.model.GameDetail
 import com.dalmuina.utils.NetworkError
 import com.dalmuina.utils.Result
@@ -13,7 +14,7 @@ import org.junit.Test
 class GetGameByNameUseCaseTest {
 
     @RelaxedMockK
-    private lateinit var repository:  GameRepository
+    private lateinit var repository: GameRepository
 
     private lateinit var getGameByNameUseCase: GetGameByNameUseCase
 

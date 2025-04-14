@@ -2,6 +2,7 @@ package com.dalmuina.domain
 
 
 
+import com.dalmuina.domain.repository.GameRepository
 import com.dalmuina.model.Game
 import com.dalmuina.utils.NetworkError
 import com.dalmuina.utils.Result

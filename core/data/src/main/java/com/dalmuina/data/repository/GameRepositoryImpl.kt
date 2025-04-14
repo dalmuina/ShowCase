@@ -1,7 +1,7 @@
 package com.dalmuina.data.repository
 
 import com.dalmuina.api_client.ApiClient
-import com.dalmuina.domain.GameRepository
+import com.dalmuina.domain.repository.GameRepository
 import com.dalmuina.model.Game
 import com.dalmuina.model.GameDetail
 import com.dalmuina.model.GamesResponse

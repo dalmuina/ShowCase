@@ -50,6 +50,7 @@ dependencies {
 
     //Koin
     implementation(libs.bundles.koin)
+
     //Ktor
     implementation(libs.bundles.ktor)
 
@@ -57,6 +58,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockk)
+    testImplementation(libs.truth)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation (libs.ktor.client.mock)
 }

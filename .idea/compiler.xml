@@ -5,6 +5,9 @@
       <module name="ShowCase.app.core" target="21" />
       <module name="ShowCase.core.data.test" target="11" />
       <module name="ShowCase.core.domain.test" target="11" />
+      <module name="ShowCase.core.ui" target="21" />
+      <module name="ShowCase.core.ui.main" target="11" />
+      <module name="ShowCase.core.ui.test" target="11" />
       <module name="ShowCase.core.util" target="21" />
       <module name="ShowCase.di" target="11" />
       <module name="ShowCase.di.main" target="11" />

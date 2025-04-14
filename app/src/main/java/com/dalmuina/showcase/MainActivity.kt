@@ -9,8 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.dalmuina.showcase.games.presentation.navigation.NavManager
-import com.dalmuina.showcase.ui.theme.ShowCaseTheme
+import com.dalmuina.designsystem.theme.ShowCaseTheme
+import com.dalmuina.showcase.navigation.NavManager
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

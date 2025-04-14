@@ -2,6 +2,7 @@ package com.dalmuina.domain
 
 
 
+import com.dalmuina.domain.repository.GameRepository
 import com.dalmuina.model.Game
 import com.dalmuina.utils.NetworkError
 import com.dalmuina.utils.Result
@@ -16,7 +17,7 @@ import kotlin.test.assertFailsWith
 class GetAllGamesUseCaseTest {
 
     @RelaxedMockK
-    private lateinit var repository:  GameRepository
+    private lateinit var repository: GameRepository
 
     private lateinit var getAllGamesUseCase: GetAllGamesUseCase
 
