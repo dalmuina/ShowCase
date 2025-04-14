@@ -37,25 +37,19 @@ android {
 dependencies {
 
     implementation(project(":core:network"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:utils"))
-    implementation(project(":core:model"))
-    implementation(project(":core:api-client"))
-
-
-    //Koin
-    implementation(libs.bundles.koin)
-
-    //Paging
-    implementation(libs.bundles.paging)
+    api(project(":core:domain"))
+    api(project(":core:utils"))
+    api(project(":core:model"))
+    api(project(":core:api-client"))
 
     //Ktor
-    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.ktor) {
+        exclude(group = "io.ktor", module="ktor-client-content-negotiation")
+        exclude(group = "io.ktor", module="ktor-client-logging")
+    }
 
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.bundles.paging)
+    //Koin
+    implementation(libs.bundles.koin)
 }

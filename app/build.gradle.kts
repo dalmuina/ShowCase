@@ -63,42 +63,43 @@ android {
 dependencies {
 
     //Modules
-    implementation(project(":core:utils"))
+    api(project(":core:utils"))
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
-    implementation(project(":core:model"))
+    api(project(":core:model"))
+    implementation(project(":core:model-ui"))
     implementation(project(":core:network"))
+    implementation(project(":core:designsystem"))
 
     //Core
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.bundles.compose)
     debugImplementation(libs.bundles.compose.debug)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation (libs.material)
 
+    //Compose
+    implementation(libs.bundles.compose){
+        exclude(module="androidx.compose.material3.adaptive:adaptive-navigation")
+        exclude(group="org.jetbrains.kotlinx",module="kotlinx-serialization-json")
+    }
 
     //Corrutinas
-    implementation (libs.kotlinx.coroutines.android)
-
-    //Room
-    implementation(libs.bundles.room)
-
-    //Coil
-    implementation(libs.coil.compose)
+    runtimeOnly(libs.kotlinx.coroutines.android)
 
     //Ktor
-    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.ktor) {
+        exclude(group = "io.ktor", module="ktor-client-content-negotiation")
+        exclude(group = "io.ktor", module="ktor-client-core")
+        exclude(group = "io.ktor", module="ktor-client-logging")
+    }
 
     //Koin
     implementation(libs.bundles.koin)
 
     //Paging
-    implementation(libs.bundles.paging)
-
-    //Dotenv
-    implementation(libs.dotenv.kotlin)
+    implementation(libs.bundles.paging) {
+        exclude(module="androidx.paging:paging-runtime")
+    }
 
     //SplashScreen
     implementation(libs.androidx.core.splashscreen)
@@ -110,7 +111,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    debugRuntimeOnly(libs.androidx.ui.test.manifest)
     testImplementation (libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -119,4 +120,3 @@ dependencies {
     testImplementation(libs.androidx.core.testing)
 
 }
-
